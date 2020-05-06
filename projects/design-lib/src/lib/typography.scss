@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
+
+
+/*
+ *  Generic Typography
+ */
+
+%roboto-light {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+%roboto-regular {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+%roboto-medium {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+
+
+%roboto-bold {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
+
+%roboto-black {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 0;
+  @extend %roboto-regular;
+}

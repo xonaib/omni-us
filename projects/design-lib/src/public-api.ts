@@ -5,3 +5,5 @@
 export * from './lib/design-lib.service';
 export * from './lib/design-lib.component';
 export * from './lib/design-lib.module';
+
+export * from './lib/pagination/pagination.module';

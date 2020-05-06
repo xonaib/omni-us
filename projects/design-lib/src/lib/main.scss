@@ -1,0 +1,28 @@
+@import "./variables.scss";
+@import "./typography.scss";
+
+/* Basic */
+
+.after-header {
+  padding-top: 100px;
+}
+
+/* Responsvice */
+
+@mixin respond-to($media) {
+  @if $media == desktop {
+    @media only screen and (max-width: 1024px) { @content; }
+  }
+
+  @else if $media == laptopSmall {
+    @media only screen and (max-width: 1200px) { @content; }
+  }
+
+  @else if $media == laptop {
+    @media only screen and (max-width: 1400px) { @content; }
+  }
+
+  @else if $media == largescreen {
+    @media only screen and (min-width: 1600px) { @content; }
+  }
+}

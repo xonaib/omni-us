@@ -1,0 +1,75 @@
+@import "../../variables.scss";
+@import "../../typography.scss";
+
+.pagination-container {
+  color: $color-Darkgray;
+  @extend %roboto-regular;
+  font-size: 16px;
+  padding: 10px;
+  text-align: right;
+
+  .itemsOnPage {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 40px;
+    /*width: 50%;*/
+    .title {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    .itemsDropdown {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+      max-width: 80px;
+      ::ng-deep .mat-form-field-appearance-outline {
+        .mat-form-field-wrapper {
+          margin: 0;
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+  .gotoPageNav {
+    display: inline-block;
+    vertical-align: middle;
+    /*width: 50%;*/
+    .title {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    .gotoField {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+      max-width: 82px;
+      ::ng-deep .mat-form-field-appearance-outline {
+        .mat-form-field-wrapper {
+          margin: 0;
+          padding-bottom: 0;
+
+          .mat-form-field-suffix {
+            color: $color-lighterGray;
+          }
+        }
+      }
+    }
+    .pageNumbers {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+    }
+    .pageNav {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 20px;
+      button {
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}

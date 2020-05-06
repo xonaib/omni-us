@@ -1,0 +1,49 @@
+<div class="pagination-container">
+    <div class="itemsOnPage" >
+  
+      <ng-container *ngIf="showPageSizeOptions">
+        <span class="title">Display per page:</span>
+        <span class="itemsDropdown">
+          <mat-form-field appearance="outline" *ngIf="_displayedPageSizeOptions.length > 1">
+            <mat-select [value]="pageSize" (selectionChange)="changePageSize($event.value)" [disabled]="disabled" [disableOptionCentering]="true">
+              <mat-option *ngFor="let opt of _displayedPageSizeOptions" [value]="opt">{{opt}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </span>
+      </ng-container>
+    </div>
+  
+    <div class="gotoPageNav">
+      <ng-container *ngIf="showGotoPage && length > 0">
+        <span class="title">Go to page:</span>
+        <span class="gotoField">
+          <mat-form-field appearance="outline">
+            <input matInput [formControl]="pageNumInput" value="1">
+            <span class="text" matSuffix>/{{totalPages}}</span>
+          </mat-form-field>
+        </span>
+        <span class="pageNumbers">{{rangeLabel}}</span>
+      </ng-container>
+  
+  
+      <span class="pageNav">
+        <!-- disabled -->
+        <button mat-icon-button matTooltip="First Page" [disabled]="_previousButtonsDisabled()"
+          (click)="firstPage()">
+          <mat-icon>first_page</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Previous Page" [disabled]="_previousButtonsDisabled()"
+                (click)="previousPage()">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+  
+        <button mat-icon-button matTooltip="Next Page" [disabled]="_nextButtonsDisabled()" (click)="nextPage()">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Last Page" [disabled]="_nextButtonsDisabled()" (click)="lastPage()">
+          <mat-icon>last_page</mat-icon>
+        </button>
+      </span>
+    </div>
+  
+  </div>
