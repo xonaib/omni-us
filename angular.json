@@ -136,6 +136,46 @@
           }
         }
       }
+    },
+    "design-lib": {
+      "projectType": "library",
+      "root": "projects/design-lib",
+      "sourceRoot": "projects/design-lib/src",
+      "prefix": "lib",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/design-lib/tsconfig.lib.json",
+            "project": "projects/design-lib/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/design-lib/src/test.ts",
+            "tsConfig": "projects/design-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/design-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/design-lib/tsconfig.lib.json",
+              "projects/design-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "omni-us"
