@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PaginationModule } from '../../projects/design-lib/src/lib/pagination/pagination.module';
+import { TableModule } from '../../projects/design-lib/src/lib/table/table.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule, MatSidenavModule, MatTableModule, MatInputModule } from '@angular/material';
@@ -17,10 +18,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSortModule } from '@angular/material/sort';
+import { DemoTableComponent } from './demo-table/demo-table.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DemoTableComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +35,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatInputModule,
     MatIconModule,
     MatFormFieldModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

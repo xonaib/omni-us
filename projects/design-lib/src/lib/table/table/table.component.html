@@ -1,1 +1,19 @@
 <p>table works!</p>
+
+
+<table class="simple-table" mat-table [dataSource]="data" matSort >
+
+    <!-- Checkbox Column, selection column -->
+  
+
+    <!-- for columns that do not have any template -->
+    <ng-container  #someDiv *ngFor="let column of columnsWithoutTemplate" [matColumnDef]="column.columnDef">
+        <th *matHeaderCellDef mat-sort-header="{{ column.columnDef }}" [disabled]="column.isSortable === false">{{ column.header }}</th>
+        <td *matCellDef="let row">{{ row[column.columnDef] }}</td>
+    </ng-container>
+
+    <!--<ng-content></ng-content>-->
+
+    <tr mat-header-row *matHeaderRowDef="headers; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: headers;"></tr>
+</table>

@@ -7,3 +7,4 @@ export * from './lib/design-lib.component';
 export * from './lib/design-lib.module';
 
 export * from './lib/pagination/pagination.module';
+export * from './lib/table/table.module';
