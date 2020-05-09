@@ -7,6 +7,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PaginationModule } from '../../projects/design-lib/src/lib/pagination/pagination.module';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule, MatSidenavModule, MatTableModule, MatInputModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSortModule } from '@angular/material/sort';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -15,7 +26,12 @@ import { PaginationModule } from '../../projects/design-lib/src/lib/pagination/p
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    PaginationModule
+    PaginationModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatIconModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

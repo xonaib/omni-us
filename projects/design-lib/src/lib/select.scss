@@ -1,0 +1,84 @@
+@import "./variables.scss";
+@import "./typography.scss";
+
+::ng-deep .mat-form-field {
+  &.mat-primary {
+    display: block;
+    .mat-form-field-wrapper {
+      /*margin: 0;
+      padding-bottom: 0;*/
+    }
+  }
+  &.mat-form-field-appearance-outline {
+    .mat-form-field-outline {
+      color: $color-gray;
+      &.mat-form-field-outline-thick {
+        color: $color-Darkgray;
+      }
+    }
+    .mat-form-field-infix {
+      padding: 12px 0 12px 0;
+      border-top-width: 4px;
+      margin-left: 4px;
+      .mat-select[multiple] {
+        /*width: calc(100% - 12px);*/
+      }
+    }
+    .mat-select-arrow-wrapper {
+      transform: translateY(-6%);
+    }
+    .additional-selection {
+      color: $color-gray;
+      font-size: 14px;
+    }
+    .mat-form-field-label {
+      color: $color-gray;
+      @extend %roboto-regular;
+      font-size: 16px;
+    }
+    &.mat-form-field-should-float {
+      .mat-form-field-label {
+        transform: translateY(-19px) scale(0.75);
+      }
+    }
+    &.mat-focused {
+      .mat-form-field-label {
+        color: $color-blue;
+      }
+      .mat-form-field-outline {
+        color: $color-blue;
+        &.mat-form-field-outline-thick {
+          color: $color-blue;
+        }
+      }
+      .mat-select-arrow-wrapper {
+        .mat-select-arrow {
+          color: $color-blue;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .mat-select-panel {
+  margin-top: 30px;
+  .mat-option {
+    color: $color-Darkgray;
+    .mat-option-text {
+      @extend %roboto-regular;
+      font-size: 16px;
+    }
+    &.mat-selected:not(.mat-option-disabled) {
+      color: $color-white;
+      background-color: $color-blue;
+    }
+    .mat-pseudo-checkbox-checked {
+      background-color: $color-white;
+      &:after {
+        border-left-color: $color-blue;
+        border-bottom-color: $color-blue;
+      }
+    }
+  }
+}
+
