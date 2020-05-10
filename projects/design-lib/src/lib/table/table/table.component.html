@@ -9,7 +9,10 @@
     <!-- for columns that do not have any template -->
     <ng-container  #someDiv *ngFor="let column of columnsWithoutTemplate" [matColumnDef]="column.columnDef">
         <th *matHeaderCellDef mat-sort-header="{{ column.columnDef }}" [disabled]="column.isSortable === false">{{ column.header }}</th>
-        <td *matCellDef="let row">{{ row[column.columnDef] }}</td>
+        <td *matCellDef="let row">
+            <!--{{ row[column.columnDef] }}-->
+            <mdt-table-cell [row]="row" [column]="column"></mdt-table-cell>
+        </td>
     </ng-container>
 
     <!--<ng-content></ng-content>-->
