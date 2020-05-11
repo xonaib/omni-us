@@ -19,11 +19,13 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSortModule } from '@angular/material/sort';
 import { DemoTableComponent } from './demo-table/demo-table.component';
+import { CustomTableCellComponent } from './custom-table-cell/custom-table-cell.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DemoTableComponent
+    DemoTableComponent,
+    CustomTableCellComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,9 @@ import { DemoTableComponent } from './demo-table/demo-table.component';
     TableModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CustomTableCellComponent
+  ]
 })
 export class AppModule { }

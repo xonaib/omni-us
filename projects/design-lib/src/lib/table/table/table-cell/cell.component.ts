@@ -25,7 +25,7 @@ export class TableCellComponent implements OnInit {
         this.initCell();
     }
     initCell() {
-        const cellComponent = this.cellService.getCell(this.column.cellType);
+        const cellComponent = this.cellService.getCell(this.column.cellType, this.column.options);
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(cellComponent);
         const viewContainerRef = this.cellHost.viewContainerRef;
         viewContainerRef.clear();

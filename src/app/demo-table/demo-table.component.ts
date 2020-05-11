@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FFColumnDef } from '../../../projects/design-lib/src/Interfaces/table-interface';
+import { FFColumnDef, CurrencyOptions, CellType } from '../../../projects/design-lib/src/Interfaces/table-interface';
 import { PageEvent } from '../../../projects/design-lib/src/Interfaces/paginator-interface';
 import {
   Observable,
@@ -16,6 +16,10 @@ interface Book {
   title: string;
   author: string;
   age: number;
+  currency: number;
+  date: Date;
+  dateTime: Date;
+  time: Date;
 }
 
 @Component({
@@ -44,7 +48,42 @@ export class DemoTableComponent implements OnInit {
       isSortable: false,
       header: 'Author'
     },
-
+    {
+      columnDef: 'currency',
+      isSortable: false,
+      header: 'Currency',
+      cellType: CellType.currency,
+      options: {
+        unit: '$'
+      }
+    },
+    {
+      columnDef: 'date',
+      isSortable: false,
+      header: 'Date',
+      cellType: CellType.date
+    },
+    {
+      columnDef: 'time',
+      isSortable: false,
+      header: 'Time',
+      cellType: CellType.time,
+    },
+    {
+      columnDef: 'dateTime',
+      isSortable: false,
+      header: 'Date Time',
+      cellType: CellType.dateTime
+    },
+    /*{
+      columnDef: 'custom',
+      isSortable: false,
+      header: 'Custom',
+      cellType: CellType.custom,
+      options: {
+        CustomComponent: 'CustomTableCellComponent'
+      }
+    },*/
   ];
 
   dataSourceAll: Book[] = [];
@@ -72,7 +111,11 @@ export class DemoTableComponent implements OnInit {
       author: `author ${index}`,
       title: `title ${index}`,
       id: index,
-      age: Math.round(Math.random() * 20)
+      age: Math.round(Math.random() * 20),
+      currency: Math.round(1000 + Math.random() * 2000),
+      date: new Date(),
+      time: new Date(),
+      dateTime: new Date(),
     };
 
     return book;

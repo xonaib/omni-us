@@ -15,6 +15,10 @@ import { CellDirective } from './table/table-cell/cell.directive';
 //import { CellComponent } from './table/table-cell/cell-types/cell.component';
 import { CellService } from './table/table-cell/cell-types/cell.service';
 import { TextCellComponent } from './table/table-cell/cell-types/text-cell.component';
+import { CurrencyCellComponent } from './table/table-cell/cell-types/currency-cell.component';
+import { DateCellComponent } from './table/table-cell/cell-types/date-cell.component';
+
+import { CellType } from '../../Interfaces/table-interface';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,9 @@ import { TextCellComponent } from './table/table-cell/cell-types/text-cell.compo
     CellDirective,
     //CellComponent,
     //CellService,
-    TextCellComponent
+    TextCellComponent,
+    DateCellComponent,
+    CurrencyCellComponent
   ],
   imports: [
     CommonModule,
@@ -44,11 +50,18 @@ import { TextCellComponent } from './table/table-cell/cell-types/text-cell.compo
     CellService
   ],
   entryComponents: [
-    TextCellComponent
+    TextCellComponent,
+    DateCellComponent,
+    CurrencyCellComponent
   ]
 })
 export class TableModule {
   constructor(private cellService: CellService) {
-    cellService.registerCell('string', TextCellComponent);
+    cellService.registerCell(CellType.text, TextCellComponent);
+    cellService.registerCell(CellType.date, DateCellComponent);
+    cellService.registerCell(CellType.time, DateCellComponent);
+    cellService.registerCell(CellType.dateTime, DateCellComponent);
+    cellService.registerCell(CellType.currency, CurrencyCellComponent);
+
   }
 }
