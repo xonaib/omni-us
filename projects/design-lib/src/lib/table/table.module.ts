@@ -19,6 +19,7 @@ import { CurrencyCellComponent } from './table/table-cell/cell-types/currency-ce
 import { DateCellComponent } from './table/table-cell/cell-types/date-cell.component';
 
 import { CellType } from '../../Interfaces/table-interface';
+import { OmniTableComponent } from './omni-table/omni-table.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CellType } from '../../Interfaces/table-interface';
     //CellService,
     TextCellComponent,
     DateCellComponent,
-    CurrencyCellComponent
+    CurrencyCellComponent,
+    OmniTableComponent
   ],
   imports: [
     CommonModule,

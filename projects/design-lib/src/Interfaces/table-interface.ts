@@ -24,3 +24,23 @@ export interface CurrencyOptions {
 export interface CustomComponent {
     componentName: string;
 }
+
+export interface TableSort {
+    field: string;
+    method: 'asc' | 'desc';
+}
+
+export interface TableFilter {
+    field: string;
+    method: 'equality' | 'range';
+    parameters: string | number[];
+}
+
+export interface TableDataParams {
+    pageSize: number;
+    pageNumber: number;
+    cursor: number;
+    search: string;
+    sort: TableSort[],
+    filter: TableFilter[];
+}

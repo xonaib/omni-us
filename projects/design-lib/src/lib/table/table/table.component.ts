@@ -17,7 +17,14 @@ import {
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatTable, MatColumnDef } from '@angular/material';
-import { FFColumnDef } from 'projects/design-lib/src/Interfaces/table-interface';
+import {
+  FFColumnDef,
+  TableSort,
+  TableFilter,
+  TableDataParams
+} from 'projects/design-lib/src/Interfaces/table-interface';
+
+import { DesignLibService } from '../../../Services/design-lib.service';
 
 @Component({
   selector: 'lib-table',
@@ -84,7 +91,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   get columnsWithoutTemplate(): FFColumnDef[] { return this._columnsWithoutTemplate; }
   private _columnsWithoutTemplate: FFColumnDef[] = [];
 
-  constructor() { }
+  constructor(private libServce: DesignLibService) { }
 
   private _switchDataSource(value: T[] | Observable<T[]>) {
     this._data = [];
@@ -110,10 +117,21 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
 
   ngOnInit() {
 
+    const pageSize = 100;
+    const pageNumber = 1;
+    const cursor = 1;
+    const search = '';
+    const sort: TableSort[] = [];
+    const filter: TableFilter[] = [];
+
+    this.libServce.getTableData<T>(pageSize, pageNumber, cursor, search, sort, filter)
+      .subscribe((dt: T[]) => {
+        debugger;
+      });
   }
 
   ngAfterContentInit() {
-   
+
     if (!this.table) {
       return;
     }

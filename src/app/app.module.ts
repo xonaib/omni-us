@@ -21,6 +21,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { DemoTableComponent } from './demo-table/demo-table.component';
 import { CustomTableCellComponent } from './custom-table-cell/custom-table-cell.component';
 
+import { HttpRequestInterceptor } from './Interceptors/mock-interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule  } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,9 +41,17 @@ import { CustomTableCellComponent } from './custom-table-cell/custom-table-cell.
     MatInputModule,
     MatIconModule,
     MatFormFieldModule,
-    TableModule
+    TableModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpRequestInterceptor,
+      //useClass: isMock ? HttpMockRequestInterceptor : HttpRequestInterceptor,
+      multi: true
+    } 
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     CustomTableCellComponent
