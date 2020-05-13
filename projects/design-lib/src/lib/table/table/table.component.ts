@@ -3,9 +3,9 @@ import { Component, OnInit, AfterContentInit, OnDestroy, Input, ViewChild, Conte
 //import { coerceNumberProperty } from '../../../Utils/Coercion/number-property';
 //import { isArray, isArrayEmpty } from '../../../Utils/Coercion/array-property';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { isArray } from '../../../Utils/array-property';
+import { isArray, isArrayEmpty } from '../../../Utils/array-property';
 
-import { isDataSource } from '@angular/cdk/collections';
+import { isDataSource, SelectionModel } from '@angular/cdk/collections';
 
 import {
   Observable,
@@ -16,7 +16,7 @@ import {
   BehaviorSubject
 } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MatTable, MatColumnDef } from '@angular/material';
+import { MatTable, MatColumnDef, PageEvent } from '@angular/material';
 import {
   FFColumnDef,
   TableSort,
@@ -91,7 +91,54 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   get columnsWithoutTemplate(): FFColumnDef[] { return this._columnsWithoutTemplate; }
   private _columnsWithoutTemplate: FFColumnDef[] = [];
 
-  constructor(private libServce: DesignLibService) { }
+  /** should show pagination */
+  // tslint:disable-next-line: no-inferrable-types
+  @Input() hasPagination: boolean = true;
+
+  /** The length of the total number of items that are being paginated. Defaulted to 0. */
+  @Input()
+  get length(): number { return this._length; }
+  set length(value: number) {
+    const totalItems = Math.max(coerceNumberProperty(value, 0));
+    this._length = totalItems;
+  }
+  private _length = 0;
+
+  pageEvent(event: PageEvent) {
+    // this.page.emit(event);
+    debugger;
+  }
+
+  /** for checkbox selection */
+  selection = new SelectionModel<T>(true, []);
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.selection.select(...this.data);
+    //this.data.forEach(row => this.selection.select(row));
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    if (!this.data || isArrayEmpty(this.data)) {
+      return;
+    }
+
+    const numSelected = this.selection.selected.length;
+    const numRows = this.data.length;
+    return numSelected === numRows;
+  }
+  /** The label for the checkbox on the passed row */
+  checkboxLabel<T>(row?: T): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    // return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `1`;
+  }
+
+  constructor() { }
 
   private _switchDataSource(value: T[] | Observable<T[]>) {
     this._data = [];
@@ -116,18 +163,6 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   ngOnInit() {
-
-    const pageSize = 100;
-    const pageNumber = 1;
-    const cursor = 1;
-    const search = '';
-    const sort: TableSort[] = [];
-    const filter: TableFilter[] = [];
-
-    this.libServce.getTableData<T>(pageSize, pageNumber, cursor, search, sort, filter)
-      .subscribe((dt: T[]) => {
-        debugger;
-      });
   }
 
   ngAfterContentInit() {
@@ -149,6 +184,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
 
   /** Set up a subscription for the data provided by the data source. */
   private _observeRenderChanges(): void {
+
     if (!this.dataSource) {
       return;
     }

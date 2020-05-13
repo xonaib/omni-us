@@ -41,6 +41,6 @@ export interface TableDataParams {
     pageNumber: number;
     cursor: number;
     search: string;
-    sort: TableSort[],
+    sort: TableSort[];
     filter: TableFilter[];
 }

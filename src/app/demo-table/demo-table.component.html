@@ -1,5 +1,6 @@
 
-<lib-table [dataSource]="dataSource" [tableColumns]="columns">
+<!-- [dataSource]="dataSource" -->
+<lib-table-wrapper  [tableColumns]="columns" [hasPagination]="true">
 
     <!-- mat-sort-header-->
     <ng-container matColumnDef="title">
@@ -12,4 +13,4 @@
         <td mat-cell *matCellDef="let row"> {{row.author}} </td>
     </ng-container>
 
-</lib-table>
+</lib-table-wrapper>

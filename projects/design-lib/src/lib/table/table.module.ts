@@ -21,6 +21,10 @@ import { DateCellComponent } from './table/table-cell/cell-types/date-cell.compo
 import { CellType } from '../../Interfaces/table-interface';
 import { OmniTableComponent } from './omni-table/omni-table.component';
 
+import { PaginationModule } from '../pagination/pagination.module';
+import { TableWrapperComponent } from './table-wrapper/table-wrapper.component';
+//import { TestComponent } from './test/test.component'
+
 @NgModule({
   declarations: [
     TableComponent,
@@ -31,7 +35,9 @@ import { OmniTableComponent } from './omni-table/omni-table.component';
     TextCellComponent,
     DateCellComponent,
     CurrencyCellComponent,
-    OmniTableComponent
+    //TestComponent,
+    //OmniTableComponent,
+    TableWrapperComponent
   ],
   imports: [
     CommonModule,
@@ -45,9 +51,14 @@ import { OmniTableComponent } from './omni-table/omni-table.component';
     MatButtonModule,
     MatSortModule,
     MatTableModule,
-
+    PaginationModule
   ],
-  exports: [TableComponent],
+  exports: [
+    TableComponent,
+    //TestComponent
+    //OmniTableComponent
+    TableWrapperComponent,
+  ],
   providers: [
     CellService
   ],

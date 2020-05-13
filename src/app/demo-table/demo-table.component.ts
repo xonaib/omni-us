@@ -10,7 +10,7 @@ import {
 } from 'rxjs';
 //import 'rxjs/add/observable/timer';
 
-
+/*
 interface Book {
   id: number;
   title: string;
@@ -20,7 +20,7 @@ interface Book {
   date: Date;
   dateTime: Date;
   time: Date;
-}
+} */
 
 @Component({
   selector: 'app-demo-table',
@@ -29,51 +29,39 @@ interface Book {
 })
 export class DemoTableComponent implements OnInit {
 
-  private _loading = new Subject<Book[]>();
+  // private _loading = new Subject<Book[]>();
 
-  dataSource: Observable<Book[]>;
+  //dataSource: Observable<Book[]>;
 
   columns: FFColumnDef[] = [
+    {
+      columnDef: 'select',
+      header: 'Title',
+    },
     {
       columnDef: 'title',
       header: 'Title',
     },
-    {
-      header: 'Age',
-      columnDef: 'age',
-      isSortable: true
-    },
+
     {
       columnDef: 'author',
       isSortable: false,
       header: 'Author'
     },
     {
-      columnDef: 'currency',
+      columnDef: 'price',
       isSortable: false,
-      header: 'Currency',
+      header: 'Price',
       cellType: CellType.currency,
       options: {
         unit: '$'
       }
     },
     {
-      columnDef: 'date',
+      columnDef: 'releaseDate',
       isSortable: false,
       header: 'Date',
       cellType: CellType.date
-    },
-    {
-      columnDef: 'time',
-      isSortable: false,
-      header: 'Time',
-      cellType: CellType.time,
-    },
-    {
-      columnDef: 'dateTime',
-      isSortable: false,
-      header: 'Date Time',
-      cellType: CellType.dateTime
     },
     /*{
       columnDef: 'custom',
@@ -86,12 +74,14 @@ export class DemoTableComponent implements OnInit {
     },*/
   ];
 
-  dataSourceAll: Book[] = [];
+  //dataSourceAll: Book[] = [];
   length = 35;
 
   constructor() { }
 
   ngOnInit() {
+
+    /*
     this.dataSourceAll = [];
 
     for (let i = 1; i < this.length; i++) { this.dataSourceAll.push(this.createNewBook(i)); }
@@ -99,14 +89,14 @@ export class DemoTableComponent implements OnInit {
     this.dataSource = this._loading.asObservable();
 
     const someBooks: Book[] = this.dataSourceAll.slice(0, 10);
-    //this._loading.next(someBooks);
-    timer(1200)
+    */
+    /* timer(1200)
       .subscribe(s => {
         this._loading.next(someBooks);
-      });
+      }); */
   }
 
-  createNewBook(index: number): Book {
+  /* createNewBook(index: number): Book {
     const book: Book = {
       author: `author ${index}`,
       title: `title ${index}`,
@@ -119,5 +109,5 @@ export class DemoTableComponent implements OnInit {
     };
 
     return book;
-  }
+  } */
 }
