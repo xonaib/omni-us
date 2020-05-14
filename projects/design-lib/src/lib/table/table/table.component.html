@@ -22,7 +22,7 @@
         <th *matHeaderCellDef mat-sort-header="{{ column.columnDef }}" [disabled]="column.isSortable === false">{{ column.header }}</th>
         <td *matCellDef="let row">
             <!--{{ row[column.columnDef] }}-->
-            <mdt-table-cell [row]="row" [column]="column"></mdt-table-cell>
+            <mdt-table-cell i18n [row]="row" [column]="column"></mdt-table-cell>
         </td>
     </ng-container>
 

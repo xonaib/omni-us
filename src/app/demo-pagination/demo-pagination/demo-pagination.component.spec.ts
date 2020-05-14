@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DemoPaginationComponent } from './demo-pagination.component';
-
+/*
 describe('DemoPaginationComponent', () => {
   let component: DemoPaginationComponent;
   let fixture: ComponentFixture<DemoPaginationComponent>;
@@ -23,3 +23,4 @@ describe('DemoPaginationComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+*/

@@ -25,6 +25,11 @@ import { HttpRequestInterceptor } from './Interceptors/mock-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientModule  } from '@angular/common/http';
 
+import { registerLocaleData } from '@angular/common'; 
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr , 'fr');
+
 @NgModule({
   declarations: [
     AppComponent,

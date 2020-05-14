@@ -6,9 +6,18 @@
     "start": "ng serve --open",
     "build": "ng build",
     "test": "ng test",
+    "test-coverage":"ng test --no-watch --code-coverage",
+    "test-lib": "ng test design-lib",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "add-design-module": "ng g module --project=design-lib"
+    "add-design-module": "ng g module --project=design-lib",
+    "int:extract": "ng xi18n --output-path locale",
+    "start:fr": "ng serve --configuration=fr",
+    "build:client-and-server-bundles-i18n": "ng run omni-us:build:production && omni-us:build:production-fr ",
+    "build:client-and-server-bundles": "ng build --prod && ng run omni-us:build:production",
+    "build:i18n-ssr": "npm run build:client-and-server-bundles-i18n && npm run compile:server",
+    "serve:ssr": "node dist/server",
+    "run-prod": "npm run build:i18n-ssr && npm run serve:ssr"
   },
   "private": true,
   "dependencies": {
@@ -18,6 +27,7 @@
     "@angular/compiler": "~8.2.14",
     "@angular/core": "~8.2.14",
     "@angular/forms": "~8.2.14",
+    "@angular/localize": "^9.1.7",
     "@angular/material": "^8.2.3",
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",

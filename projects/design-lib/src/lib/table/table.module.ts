@@ -19,7 +19,7 @@ import { CurrencyCellComponent } from './table/table-cell/cell-types/currency-ce
 import { DateCellComponent } from './table/table-cell/cell-types/date-cell.component';
 
 import { CellType } from '../../Interfaces/table-interface';
-import { OmniTableComponent } from './omni-table/omni-table.component';
+// import { OmniTableComponent } from './omni-table/omni-table.component';
 
 import { PaginationModule } from '../pagination/pagination.module';
 import { TableWrapperComponent } from './table-wrapper/table-wrapper.component';

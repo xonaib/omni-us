@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { FFColumnDef, TableSort, TableFilter, TableDataParams } from 'projects/design-lib/src/Interfaces/table-interface';
 
@@ -10,7 +10,7 @@ import { PageEvent } from '@angular/material';
   templateUrl: './table-wrapper.component.html',
   styleUrls: ['./table-wrapper.component.scss']
 })
-export class TableWrapperComponent<T> implements OnInit {
+export class TableWrapperComponent<T> implements OnInit, OnDestroy {
 
   // @Input() dataSource: T[] | Observable<T[]>;
   @Input() data: T[];
@@ -61,5 +61,10 @@ export class TableWrapperComponent<T> implements OnInit {
         this.length = dt[0];
         this._loading.next(dt[1]);
       });
+  }
+
+  ngOnDestroy() {
+    this._loading.next();
+    this._loading.complete();
   }
 }

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DemoTableComponent } from './demo-table.component';
-
+/*
 describe('DemoTableComponent', () => {
   let component: DemoTableComponent;
   let fixture: ComponentFixture<DemoTableComponent>;
@@ -23,3 +23,4 @@ describe('DemoTableComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+*/
