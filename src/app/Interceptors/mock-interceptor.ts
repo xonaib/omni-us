@@ -63,6 +63,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
     sortItems<T>(items: T[], sort: TableSort[]): T[] {
 
+        if (items == null || sort == null || sort.length === 0) {
+            return items;
+        }
+
+        //return items.sort((a, b) => (a[prop] > b[prop]) ? 1 : ((b[prop] > a[prop]) ? -1 : 0)); */
+
         return items;
     }
 
