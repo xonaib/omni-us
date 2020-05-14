@@ -27,6 +27,9 @@ export class DesignLibService {
     );
   }
 
+
+
+
   /**
    * Returns List Of Data to show in table
    * @param pageSize Page Size
@@ -38,7 +41,9 @@ export class DesignLibService {
    */
   getTableData<T>(
     pageSize: number, pageNumber: number, cursor: number, search: string,
-    sort: TableSort[], filter: TableFilter[]): Observable<T[]> {
+    sort: TableSort[], filter: TableFilter[]): Observable<[number, T[]]> {
+
+    type T1 = [number, T[]];
 
     const options = {
       headers: this.httpHeaders
@@ -53,10 +58,14 @@ export class DesignLibService {
       filter
     };
 
-    //const params = { params: new HttpParams().set('name', term) };
 
-    return this.http.post<T[]>(`${this.searchUrl}`, params, options).pipe(
-      catchError(err => of([]))
+    return this.http.post<T1>(`${this.searchUrl}`, params, options).pipe(
+      // catchError(err => of([0, []]))
+      // catchError(err => of())
     );
+
+    /*return this.http.post<T[]>(`${this.searchUrl}`, params, options).pipe(
+      catchError(err => of([]))
+    ); */
   }
 }

@@ -9,7 +9,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 
-import { PageEvent } from '../../../Interfaces/paginator-interface';
+//import { PageEvent } from '../../../Interfaces/paginator-interface';
 
 import { FormControl } from '@angular/forms';
 
@@ -18,6 +18,7 @@ import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { PageEvent } from '@angular/material';
 
 /** The default page size if there is no page size and there are no provided page size options. */
 const DEFAULT_PAGE_SIZE = 50;
@@ -276,15 +277,15 @@ export class PaginationComponent implements OnInit {
   private _emitPageEvent(previousPageIndex: number) {
     this.updatePageRangeLabel();
 
-    const [startIndex, endIndex] = this.getPageIndexsForPageNumber(this.pageIndex, this.pageSize, this.length);
+    // const [startIndex, endIndex] = this.getPageIndexsForPageNumber(this.pageIndex, this.pageSize, this.length);
 
     this.page.emit({
       previousPageIndex,
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
       length: this.length,
-      startItemIndex: startIndex,
-      endItemIndex: endIndex
+      // startItemIndex: startIndex,
+      // endItemIndex: endIndex
     });
   }
 

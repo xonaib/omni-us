@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { FFColumnDef, TableSort, TableFilter } from 'projects/design-lib/src/Interfaces/table-interface';
+import { FFColumnDef, TableSort, TableFilter, TableDataParams } from 'projects/design-lib/src/Interfaces/table-interface';
 
 import { DesignLibService } from '../../../Services/design-lib.service';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'lib-table-wrapper',
@@ -27,21 +28,38 @@ export class TableWrapperComponent<T> implements OnInit {
   ngOnInit() {
     this.dataSource = this._loading.asObservable();
 
-    this.fetchDataFromAPI();
+    const params: TableDataParams = {
+      pageNumber: 0,
+      pageSize: 10,
+      cursor: 0,
+      search: '',
+      sort: [],
+      filter: []
+    };
+    this.fetchDataFromAPI(params);
   }
 
-  fetchDataFromAPI(): void {
-    const pageSize = 10;
-    const pageNumber = 1;
-    const cursor = 0;
-    const search = '';
-    const sort: TableSort[] = [];
-    const filter: TableFilter[] = [];
+  pageEvent(event: PageEvent) {
+    debugger;
 
-    this.service.getTableData<T>(pageSize, pageNumber, cursor, search, sort, filter)
-      .subscribe((dt: T[]) => {
-        debugger;
-        this._loading.next(dt);
+    const params: TableDataParams = {
+      pageNumber: event.pageIndex,
+      pageSize: event.pageSize,
+      cursor: 0,
+      search: '',
+      sort: [],
+      filter: []
+    };
+
+    this.fetchDataFromAPI(params);
+  }
+  fetchDataFromAPI(params: TableDataParams): void {
+
+    this.service.getTableData<T>(params.pageSize, params.pageNumber, params.cursor, params.search, params.sort, params.filter)
+      .subscribe((dt: [number, T[]]) => {
+
+        this.length = dt[0];
+        this._loading.next(dt[1]);
       });
   }
 }

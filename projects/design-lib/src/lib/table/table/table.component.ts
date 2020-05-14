@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, OnDestroy, Input, ViewChild, ContentChildren, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, AfterContentInit, OnDestroy, Input, ViewChild, ContentChildren, ViewChildren, QueryList, EventEmitter, Output } from '@angular/core';
 
 //import { coerceNumberProperty } from '../../../Utils/Coercion/number-property';
 //import { isArray, isArrayEmpty } from '../../../Utils/Coercion/array-property';
@@ -104,9 +104,11 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
   private _length = 0;
 
+  /** Event emitted when the paginator changes the page size or page index. */
+  @Output() readonly page: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
+
   pageEvent(event: PageEvent) {
-    // this.page.emit(event);
-    debugger;
+    this.page.emit(event);
   }
 
   /** for checkbox selection */
@@ -117,7 +119,6 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.selection.select(...this.data);
-    //this.data.forEach(row => this.selection.select(row));
   }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -130,7 +131,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     return numSelected === numRows;
   }
   /** The label for the checkbox on the passed row */
-  checkboxLabel<T>(row?: T): string {
+  checkboxLabel(row?: T): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }

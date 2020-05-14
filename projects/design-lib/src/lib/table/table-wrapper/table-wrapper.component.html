@@ -1,5 +1,5 @@
 <p>table-wrapper works!</p>
 
-<lib-table [dataSource]="dataSource" [data]="data" [tableColumns]="tableColumns" [hasPagination]="hasPagination" [length]="length">
+<lib-table [dataSource]="dataSource" [data]="data" [tableColumns]="tableColumns" [hasPagination]="hasPagination" [length]="length" (page)="pageEvent($event)">
 
 </lib-table>

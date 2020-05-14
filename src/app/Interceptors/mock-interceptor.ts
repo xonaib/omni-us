@@ -18,15 +18,10 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
         const params: TableDataParams = request.body as TableDataParams;
 
-        debugger;
         if (params.cursor) {
             const book: Book = this.getItemById(books, params.cursor, 'id');
 
-            timer(500).subscribe(() => {
-
-            });
-
-            return timer(500).pipe(switchMap(() => { return of(new HttpResponse({ status: 200, body: book })) }));
+            return timer(500).pipe(switchMap(() => { return of(new HttpResponse({ status: 200, body: [1, [book]] })) }));
 
             //return of(new HttpResponse({ status: 200, body: book }));
         }
@@ -34,14 +29,17 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         let filteredResults: Book[] = [];
         filteredResults = this.filterItems(books, params.filter);
 
+        // to-do: map keys from interface
         const searchKeys = ['author', 'title', 'releaseDate', 'price', 'rating'];
         filteredResults = this.searchInItems(filteredResults, params.search, searchKeys);
+
+        const itemsCount = filteredResults.length;
 
         filteredResults = this.sortItems(filteredResults, params.sort);
 
         filteredResults = this.paginateItems(filteredResults, params.pageNumber, params.pageSize);
 
-        return timer(500).pipe(switchMap(() => { return of(new HttpResponse({ status: 200, body: filteredResults })) }));
+        return timer(500).pipe(switchMap(() => { return of(new HttpResponse({ status: 200, body: [itemsCount, filteredResults] })) }));
         // return of(new HttpResponse({ status: 200, body: filteredResults }));
         // return of(new HttpResponse({ status: 200, body: (([1, 2, 3]) as any).default }));
 
@@ -57,8 +55,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         // if pageNum = 2, pageSize = 10, then return => 10,20
         // if pageNum = 4, pageSize = 10, then return => 31,35
 
-        const startIndex = (pageNum - 1) * pageSize;
-        const endIndex = ((pageNum) * pageSize);
+        const startIndex = (pageNum) * pageSize;
+        const endIndex = ((pageNum + 1) * pageSize);
 
         return items.slice(startIndex, endIndex);
     }
