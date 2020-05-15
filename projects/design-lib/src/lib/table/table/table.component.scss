@@ -55,6 +55,32 @@
            color: $color-red;
          }
 
+         .filters {
+           position: absolute;
+           cursor: pointer;
+           right: 10px;
+           top: -5px;
+           width: 20px;
+           height: 20px;
+           //opacity: 0;
+           //background-color: $color-filterGray;
+           transition: all 0.3s ease-in-out;
+           //background: url("../../../assets/images/filter-icon.svg");
+           //-webkit-mask: url(../../../assets/images/filter-icon.svg) no-repeat center;
+           //mask: url(../../../assets/images/filter-icon.svg) no-repeat center;
+
+           &:hover {
+             //background-color: $color-blue;
+           }
+           &.show-filter {
+             opacity: 1;
+             background-color: $color-blue;
+             + .filter-popup {
+               display: block;
+             }
+           }
+         }
+
          .sorting {
            position: absolute;
            right: 10px;
@@ -82,6 +108,23 @@
              }
            }
          }
+
+         &:hover {
+           .filters {
+             opacity: 1;
+           }
+         }
+
+         &.filter-col {
+           padding-right: 34px;
+           &.filter-applied {
+             .filters {
+               opacity: 1;
+               background-color: $color-blue;
+             }
+           }
+         }
+
        }
        &.no-wrap {
          th {
@@ -244,5 +287,195 @@
 .mat-column-userId {
   .mat-form-field{
     width: calc(100% - 15px);
+  }
+}
+
+.filter-popup {
+  display: none;
+  position: absolute;
+  width: 300px;
+  top: 100%;
+  right: -10px;
+  z-index: 50;
+  box-shadow: 0 0 12px 0 rgba(0,0,0,0.16);
+  border-radius: 4px;
+  /*overflow: hidden;*/
+  background-color: $color-white;
+  font-weight: normal;
+  text-transform: capitalize;
+  &.active {
+    display: block;
+  }
+  &:before {
+    content: "";
+    position: absolute;
+    right: 20px;
+    top: -10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid $color-filterGray;
+  }
+  &.open-right {
+    left: calc(100% - 50px);
+    right: auto;
+
+    &:before {
+      right: auto;
+      left: 20px;
+    }
+  }
+  .filter-header {
+    padding: 10px 16px;
+    border-radius: 4px 4px 0 0;
+    background-color: $color-filterGray;
+    color: $color-white;
+    font-size: 14px;
+    @extend %roboto-regular;
+    h4 {
+      @extend %roboto-bold;
+      font-size: 16px;
+      margin-bottom: 0;
+    }
+  }
+  .filter-sort-select {
+    padding: 10px 16px;
+    .select-unselect {
+      color: $color-blue;
+      text-decoration: underline;
+    }
+    .sort-icon {
+      background-color: $color-darkerGray;
+      width: 20px;
+      height: 16px;
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+      &.asc {
+        -webkit-mask: url(../../../assets/images/sort-asc.svg) no-repeat center;
+        mask: url(../../../assets/images/sort-asc.svg) no-repeat center;
+      }
+      &.desc {
+        -webkit-mask: url(../../../assets/images/sort-desc.svg) no-repeat center;
+        mask: url(../../../assets/images/sort-desc.svg) no-repeat center;
+      }
+      &.sorted {
+        background-color: $color-blue;
+      }
+    }
+  }
+  .filter-search-container {
+    padding: 0 16px;
+    .filter-search-bar {
+      position: relative;
+      .search-icon {
+        position: absolute;
+        left: 16px;
+        top: 7px;
+        color: $color-Lightgray;
+      }
+      input {
+        padding: 7px 16px 7px 44px;
+        transition: border 0.3s ease-in-out;
+        width: 100%;
+        border: 1px solid $color-thead-border;
+        font-size: 14px;
+        border-radius: 4px;
+        @extend %roboto-regular;
+        &::placeholder {
+          color: $color-Lightgray;
+        }
+        &:focus {
+          outline: none;
+          border-color: $color-blue;
+        }
+      }
+    }
+  }
+  .filter-list-container {
+    padding: 10px 16px;
+    .filter-list {
+      list-style: none outside none;
+      padding: 0;
+      margin: 0;
+      li {
+        margin-bottom: 8px;
+        ::ng-deep .mat-checkbox-layout {
+          .mat-checkbox-label {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+  .filter-footer-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $color-white;
+    padding: 0 10px 10px 10px;
+
+    .filter-footer {
+      padding: 10px 16px;
+      border-radius: 4px;
+      background-color: $color-Lightblue1;
+
+      .mat-flat-button {
+        width: calc(50% - 8px);
+      }
+    }
+  }
+  .filter-datepicker {
+    ::ng-deep .owl-dt-inline {
+      width: 100%;
+      .owl-dt-inline-container, .owl-dt-popup-container{
+        box-shadow: none;
+        width: 100%;
+      }
+    }
+    ::ng-deep .owl-dt-container {
+      .owl-dt-calendar-table {
+        .owl-dt-calendar-header {
+          .owl-dt-weekdays {
+            th {
+              background-color: transparent;
+              border: none;
+              color: rgba(0,0,0,.4);
+              text-transform: capitalize;
+              padding: 0 0 8px 0;
+            }
+          }
+          .owl-dt-calendar-table-divider {
+            padding: 0 0 0.5em 0;
+            border: none;
+            background-color: transparent;
+          }
+        }
+        .owl-dt-calendar-cell {
+          border: none;
+        }
+      }
+    }
+    ::ng-deep .owl-dt-calendar-multi-year-view {
+      .owl-dt-calendar-table {
+        .owl-dt-calendar-header {
+          th {
+            background-color: transparent;
+            border: none;
+            padding: 0 0 .25em 0;
+            color: rgba(0,0,0,.4);
+            font-size: 16px;
+          }
+        }
+      }
+    }
+    + .filter-footer-container {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      right: auto;
+    }
   }
 }

@@ -139,6 +139,26 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     return `1`;
   }
 
+  templateFor: string;
+  onFilterClick(templateFor: string) {
+
+    this.templateFor = templateFor;
+  }
+
+  Showfilters(event): void {
+    var elems = document.querySelectorAll("th .filters");
+    [].forEach.call(elems, function (el) {
+      if (el != event.target) {
+        el.classList.remove("show-filter");
+      }
+    });
+    event.target.classList.toggle('show-filter');
+  }
+
+  columnFilterApply(filter: TableFilter): void {
+    debugger;
+  }
+
   constructor() { }
 
   private _switchDataSource(value: T[] | Observable<T[]>) {

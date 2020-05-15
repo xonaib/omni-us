@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule, MatTableModule } from '@angular/material';
 import { MatSortModule } from '@angular/material/sort';
 
+
 import { TableComponent } from './table/table.component';
 import { TableCellComponent } from './table/table-cell/cell.component';
 import { CellDirective } from './table/table-cell/cell.directive';
@@ -23,6 +24,7 @@ import { CellType } from '../../Interfaces/table-interface';
 
 import { PaginationModule } from '../pagination/pagination.module';
 import { TableWrapperComponent } from './table-wrapper/table-wrapper.component';
+import { ColumnFilterComponent } from './column-filter/column-filter.component';
 //import { TestComponent } from './test/test.component'
 
 @NgModule({
@@ -37,7 +39,8 @@ import { TableWrapperComponent } from './table-wrapper/table-wrapper.component';
     CurrencyCellComponent,
     //TestComponent,
     //OmniTableComponent,
-    TableWrapperComponent
+    TableWrapperComponent,
+    ColumnFilterComponent
   ],
   imports: [
     CommonModule,

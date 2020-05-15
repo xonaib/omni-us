@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FFColumnDef, CurrencyOptions, CellType } from '../../../projects/design-lib/src/Interfaces/table-interface';
-import { PageEvent } from '../../../projects/design-lib/src/Interfaces/paginator-interface';
+// import { PageEvent } from '../../../projects/design-lib/src/Interfaces/paginator-interface';
 import {
   Observable,
   Subject,

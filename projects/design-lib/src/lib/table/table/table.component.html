@@ -1,7 +1,14 @@
 <p>table works!</p>
+<mat-menu #appMenu="matMenu">
+    <button mat-menu-item>Settings</button>
+    <button mat-menu-item>Help</button>
+  </mat-menu>
+  
+  <button mat-icon-button [matMenuTriggerFor]="appMenu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
 
-
-<table class="simple-table" mat-table [dataSource]="data" matSort >
+<table class="simple-table" mat-table [dataSource]="data" matSort>
 
     <!-- Checkbox Column, selection column -->
     <ng-container matColumnDef="select">
@@ -17,9 +24,66 @@
         </td>
     </ng-container>
 
-    <!-- for columns that do not have any template -->
-    <ng-container  #someDiv *ngFor="let column of columnsWithoutTemplate" [matColumnDef]="column.columnDef">
-        <th *matHeaderCellDef mat-sort-header="{{ column.columnDef }}" [disabled]="column.isSortable === false">{{ column.header }}</th>
+    <!-- for columns that do not have any template 
+    mat-sort-header="{{ column.columnDef }}" [disabled]="column.isSortable === false"
+ -->
+    <ng-container #someDiv *ngFor="let column of columnsWithoutTemplate" [matColumnDef]="column.columnDef">
+        <th *matHeaderCellDef>
+            
+
+            <!--
+            <mat-menu #appMenu="matMenu">
+                <button mat-menu-item>Settings</button>
+                <button mat-menu-item>Help</button>
+              </mat-menu>
+              
+              <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button> -->
+
+            <!--<span (click)="onFilterClick( column.columnDef);" class="filter-icon filters">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </span> -->
+            <span mat-sort-header>{{ column.header }}</span>
+
+            <lib-column-filter [field]="column.columnDef" (filterApply)="columnFilterApply($event)"></lib-column-filter>
+
+           
+            <!--<span class="filters" (click)="Showfilters($event);"></span>
+
+            <div class="filter-popup open-right">
+                <div class="filter-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h4>Filters</h4>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            13795 Records
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-sort-select">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a href="javascript:void(0);" class="select-unselect">
+                                Select All
+                            </a>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <span class="sort-icon asc sorted mr-2"></span>
+                            <span class="sort-icon desc"></span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="filter-list-container" style="height: 300px;">
+    
+                </div>
+            </div> -->
+
+
+        </th>
         <td *matCellDef="let row">
             <!--{{ row[column.columnDef] }}-->
             <mdt-table-cell i18n [row]="row" [column]="column"></mdt-table-cell>

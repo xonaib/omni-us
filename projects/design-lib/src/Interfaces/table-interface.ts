@@ -44,3 +44,4 @@ export interface TableDataParams {
     sort: TableSort[];
     filter: TableFilter[];
 }
+

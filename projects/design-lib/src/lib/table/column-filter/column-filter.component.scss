@@ -1,0 +1,22 @@
+.form-group {
+    :hover {
+        background: rgba(0, 0, 0, 0.04);
+    }
+}
+
+.no-hover-effect {
+    background-color: transparent;
+}
+
+.mat-menu-item {
+    :hover {
+        background: #fff;
+    }
+}
+
+.mat-menu-item-highlighted:not([disabled]),
+.mat-menu-item.cdk-keyboard-focused:not([disabled]),
+.mat-menu-item.cdk-program-focused:not([disabled]),
+.mat-menu-item:hover:not([disabled]) {
+  background: #fff;
+}
