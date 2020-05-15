@@ -11,13 +11,14 @@ import { TableFilter } from 'projects/design-lib/src/Interfaces/table-interface'
 })
 export class ColumnFilterComponent implements OnInit, OnDestroy {
 
+
   @ViewChild('filterMenu', { static: true }) triggerMenu: MatMenuTrigger;
 
+  /** Field */
   @Input() field: string;
 
+  /** Filter Apply Event */
   @Output() readonly filterApply: EventEmitter<TableFilter> = new EventEmitter<TableFilter>();
-
-
 
   filter: TableFilter;
 
@@ -31,19 +32,19 @@ export class ColumnFilterComponent implements OnInit, OnDestroy {
     };
   }
 
+  /** Type of filter changed */
   filterTypeChange(): void {
-    debugger;
 
     if (this.filter.method === 'equality') {
       this.filter.parameters = '';
     } else {
       this.filter.parameters = [0, 0];
     }
-
-
   }
 
+  /** When filter is applied */
   applyFilter(): void {
+    debugger;
     this.filterApply.emit(this.filter);
   }
 

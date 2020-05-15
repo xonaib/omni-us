@@ -17,7 +17,7 @@
 
 <mat-menu #appMenu="matMenu">
 
-    <div mat-menu-item class="form-group no-hover-effect">
+    <div mat-menu-item class="form-group">
         <select (click)="$event.stopPropagation()" class="form-control" [(ngModel)]="filter.method"
             (change)="filterTypeChange()">
             <option [value]="'equality'">Equality</option>
@@ -28,7 +28,7 @@
 
     <ng-container *ngIf="filter.method == 'equality'">
 
-        <div mat-menu-item class="form-group no-hover-effect">
+        <div mat-menu-item class="form-group">
             <input type="text" [(ngModel)]="filter.parameters" (click)="$event.stopPropagation()"
                 (keydown)="$event.stopPropagation()" />
         </div>
@@ -36,13 +36,14 @@
     </ng-container>
 
     <ng-container *ngIf="filter.method == 'range'">
-        <div mat-menu-item class="form-group no-hover-effect" [disableRipple]="true">
+        <div mat-menu-item class="form-group" [disableRipple]="true">
             From: <input type="number" [(ngModel)]="filter.parameters[0]" (click)="$event.stopPropagation()"
                 (keydown)="$event.stopPropagation()" />
         </div>
     </ng-container>
+    
     <ng-container *ngIf="filter.method == 'range'">
-        <div mat-menu-item class="form-group no-hover-effect" [disableRipple]="true">
+        <div mat-menu-item class="form-group" [disableRipple]="true">
 
             To: <input type="number" [(ngModel)]="filter.parameters[1]" (click)="$event.stopPropagation()"
                 (keydown)="$event.stopPropagation()" />
@@ -55,10 +56,6 @@
     </div>
 
     {{filter | json}}
-
-
-    <button mat-menu-item>Settings 2</button>
-    <button mat-menu-item>Help 2</button>
 </mat-menu>
 
 <button mat-icon-button [matMenuTriggerFor]="appMenu" #filterMenu="matMenuTrigger" class="filter-icon filters">

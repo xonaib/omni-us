@@ -25,6 +25,7 @@ import {
 } from 'projects/design-lib/src/Interfaces/table-interface';
 
 import { DesignLibService } from '../../../Services/design-lib.service';
+import { PaginationComponent } from '../../pagination/pagination/pagination.component';
 
 @Component({
   selector: 'lib-table',
@@ -32,6 +33,8 @@ import { DesignLibService } from '../../../Services/design-lib.service';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
+
+  @ViewChild(PaginationComponent, { static: true }) pagination: PaginationComponent;
 
   @Input()
   get dataSource(): T[] | Observable<T[]> { return this._dataSource; }
@@ -107,8 +110,31 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   /** Event emitted when the paginator changes the page size or page index. */
   @Output() readonly page: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
 
+ /** Event emitted when the paginator changes the page size or page index. */
+ @Output('table') readonly tableEvents: EventEmitter<TableDataParams> = new EventEmitter<TableDataParams>();
+
+  private _tableParams: TableDataParams;
+
   pageEvent(event: PageEvent) {
-    this.page.emit(event);
+    //this._paginationData = event;
+    // this.page.emit(event);
+
+    this._tableParams.pageNumber = event.pageIndex;
+    this._tableParams.pageSize = event.pageSize;
+
+    this.emitTableChanges();
+  }
+
+ 
+  columnFilterApply(filter: TableFilter): void {
+    debugger;
+    this._tableParams.filter.push(filter);
+
+    this.emitTableChanges();
+  }
+
+  emitTableChanges(): void {
+    this.tableEvents.emit(this._tableParams);
   }
 
   /** for checkbox selection */
@@ -145,7 +171,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     this.templateFor = templateFor;
   }
 
-  Showfilters(event): void {
+  showfilters(event): void {
     var elems = document.querySelectorAll("th .filters");
     [].forEach.call(elems, function (el) {
       if (el != event.target) {
@@ -155,9 +181,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     event.target.classList.toggle('show-filter');
   }
 
-  columnFilterApply(filter: TableFilter): void {
-    debugger;
-  }
+
 
   constructor() { }
 
@@ -184,6 +208,14 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   ngOnInit() {
+    this._tableParams = {
+      pageNumber: 0,
+      pageSize: 10,
+      cursor: 0,
+      search: '',
+      sort: [],
+      filter: []
+    };
   }
 
   ngAfterContentInit() {
