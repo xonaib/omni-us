@@ -16,13 +16,14 @@ import {
   BehaviorSubject
 } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
-import { MatTable, MatColumnDef, PageEvent } from '@angular/material';
+import { MatTable, MatColumnDef, PageEvent, Sort } from '@angular/material';
 import {
   FFColumnDef,
   TableSort,
   TableFilter,
   TableDataParams,
-  TableEventType
+  TableEventType,
+  TableConfig
 } from 'projects/design-lib/src/Interfaces/table-interface';
 
 import { DesignLibService } from '../../../Services/design-lib.service';
@@ -51,6 +52,13 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     }
   }
   private _dataSource: T[] | Observable<T[]>;
+
+  @Input()
+  get tableConfig(): TableConfig { return this._tableConfig; }
+  set tableConfig(value: TableConfig) {
+    this._tableConfig = value;
+  }
+  private _tableConfig: TableConfig;
 
   // tslint:disable-next-line: no-inferrable-types
   private _isViewInit: boolean = false;
@@ -135,7 +143,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   pageEvent(event: PageEvent) {
-    //this._paginationData = event;
+    // this._paginationData = event;
     // this.page.emit(event);
 
     this._tableParams.pageNumber = event.pageIndex;
@@ -145,6 +153,17 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     this.emitTableChanges();
   }
 
+  /** Sort Change on header */
+  sortChange(sort: Sort) {
+
+    this._tableParams.sort = [{
+      field: sort.active,
+      method: sort.direction
+    }];
+
+    this._tableParams.eventType = TableEventType.sort;
+    this.emitTableChanges();
+  }
 
   columnFilterApply(filter: TableFilter): void {
 
@@ -263,22 +282,29 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   ngOnInit() {
+   
+  }
+
+  ngAfterContentInit() {
+    if (!this.table) {
+      return;
+    }
+    this._isViewInit = true;
+
+    let defaultPageSize = 10;
+
+    if (this.tableConfig && this.tableConfig.paginationOptions && this.tableConfig.paginationOptions.defaultPageSize) {
+      defaultPageSize = this.tableConfig.paginationOptions.defaultPageSize;
+    }
+
     this._tableParams = {
       pageNumber: 0,
-      pageSize: 10,
+      pageSize: defaultPageSize,
       cursor: 0,
       search: '',
       sort: [],
       filter: []
     };
-  }
-
-  ngAfterContentInit() {
-
-    if (!this.table) {
-      return;
-    }
-    this._isViewInit = true;
 
     this.populateTableColumns();
 

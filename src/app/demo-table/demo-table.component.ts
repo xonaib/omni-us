@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FFColumnDef, CurrencyOptions, CellType } from '../../../projects/design-lib/src/Interfaces/table-interface';
+import { FFColumnDef, CurrencyOptions, CellType, TableConfig } from '../../../projects/design-lib/src/Interfaces/table-interface';
 // import { PageEvent } from '../../../projects/design-lib/src/Interfaces/paginator-interface';
 import {
   Observable,
@@ -29,9 +29,14 @@ interface Book {
 })
 export class DemoTableComponent implements OnInit {
 
-  // private _loading = new Subject<Book[]>();
-
-  //dataSource: Observable<Book[]>;
+  tableConfig: TableConfig = {
+    isSearchable: true,
+    isPaginated: true,
+    paginationOptions: {
+      defaultPageSize: 25,
+      pageSizeOptions: [5, 10, 25, 50, 100]
+    }
+  };
 
   columns: FFColumnDef[] = [
     {

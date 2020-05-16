@@ -4,22 +4,23 @@ export interface FFColumnDef {
     isSortable?: boolean;
     columnDef: string;
     displayIndex?: number;
-    cellType?: CellType.text | CellType.currency | CellType.date | CellType.time | CellType.dateTime | CellType.custom,
+    cellType?: CellType.text | CellType.currency | CellType.date | CellType.time | CellType.dateTime | CellType.custom;
     options?: any;
     hasColumnFilters?: boolean;
     width?: string;
     alignment?: string;
+    isEditable?: boolean;
 }
 
 export interface TableConfig {
-    isSearchable: boolean;
-    isPaginated: boolean;
+    isSearchable?: boolean;
+    isPaginated?: boolean;
     paginationOptions?: PaginationOptions;
 }
 
 export interface PaginationOptions {
     defaultPageSize: number;
-    pageSizeOptions: number[];
+    pageSizeOptions?: number[];
 }
 
 export enum CellType {
@@ -41,7 +42,7 @@ export interface CustomComponent {
 
 export interface TableSort {
     field: string;
-    method: 'asc' | 'desc';
+    method: 'asc' | 'desc' | '';
 }
 
 export interface TableFilter {

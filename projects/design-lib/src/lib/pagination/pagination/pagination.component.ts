@@ -9,14 +9,10 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 
-//import { PageEvent } from '../../../Interfaces/paginator-interface';
 
 import { FormControl } from '@angular/forms';
 
-//import 'rxjs/add/operator/debounceTime';
-//import 'rxjs/add/operator/distinctUntilChanged';
 import { Subscription } from 'rxjs';
-
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { PageEvent } from '@angular/material';
 
@@ -57,7 +53,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
   @Input()
   get pageSize(): number { return this._pageSize; }
   set pageSize(value: number) {
-
+    debugger;
     this._pageSize = Math.max(coerceNumberProperty(value), 10);
     this._updateDisplayedPageSizeOptions();
 

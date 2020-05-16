@@ -22,9 +22,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         if (params.cursor) {
             const book: Book = this.getItemById(books, params.cursor, 'id');
 
-            return timer(500).pipe(switchMap(() => { return of(new HttpResponse({ status: 200, body: [1, [book]] })) }));
+            return timer(500).pipe(switchMap(() => of(new HttpResponse({ status: 200, body: [1, [book]] }))));
 
-            //return of(new HttpResponse({ status: 200, body: book }));
+            // return of(new HttpResponse({ status: 200, body: book }));
         }
 
         debugger;
@@ -41,7 +41,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
         filteredResults = this.paginateItems(filteredResults, params.pageNumber, params.pageSize);
 
-        return timer(500).pipe(switchMap(() => { return of(new HttpResponse({ status: 200, body: [itemsCount, filteredResults] })) }));
+        return timer(500).pipe(switchMap(() => of(new HttpResponse({ status: 200, body: [itemsCount, filteredResults] }))));
         // return of(new HttpResponse({ status: 200, body: filteredResults }));
         // return of(new HttpResponse({ status: 200, body: (([1, 2, 3]) as any).default }));
 
@@ -63,15 +63,28 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         return items.slice(startIndex, endIndex);
     }
 
-    sortItems<T>(items: T[], sort: TableSort[]): T[] {
+    sortItems<T>(items: T[], sorts: TableSort[]): T[] {
 
-        if (items == null || sort == null || sort.length === 0) {
+        if (items == null || sorts == null || sorts.length === 0) {
             return items;
         }
+
+        sorts.forEach((sort: TableSort) => {
+            // sort if direction is provided
+            if (sort.method !== '') {
+                const isAsc = sort.method === 'asc';
+
+                items = items.sort((a, b) => this.compare(a[sort.field], b[sort.field], isAsc));
+            }
+        });
+
 
         //return items.sort((a, b) => (a[prop] > b[prop]) ? 1 : ((b[prop] > a[prop]) ? -1 : 0)); */
 
         return items;
+    }
+    compare(a: number | string, b: number | string, isAsc: boolean) {
+        return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 
     filterItems<T>(items: T[], filters: TableFilter[]): T[] {
@@ -118,10 +131,11 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             return items;
         }
         let result: T[] = [];
+        query = query.toLowerCase();
 
         keys.forEach((key: string) => {
 
-            const matches = items.filter(f => (f[key] as string).includes(query));
+            const matches = items.filter(f => (f[key] as string).toLowerCase().includes(query));
 
             if (isArray(matches) && matches.length > 0) {
                 result = result.concat(...matches);

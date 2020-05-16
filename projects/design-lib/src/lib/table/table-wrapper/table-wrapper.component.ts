@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Observable, Subject, observable, of } from 'rxjs';
-import { FFColumnDef, TableSort, TableFilter, TableDataParams, TableEventType } from 'projects/design-lib/src/Interfaces/table-interface';
+import { FFColumnDef, TableSort, TableFilter, TableDataParams, TableEventType, TableConfig } from 'projects/design-lib/src/Interfaces/table-interface';
 
 import { DesignLibService } from '../../../Services/design-lib.service';
 import { PageEvent } from '@angular/material';
@@ -19,6 +19,8 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
   // tslint:disable-next-line: no-inferrable-types
   @Input() hasPagination: boolean = true;
   @Input() length: number;
+
+  @Input() tableConfig: TableConfig;
 
   // Event Emitters for data
   @Output() readonly onDataLoadStarted: EventEmitter<void> = new EventEmitter<void>();
@@ -40,9 +42,13 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
   ngOnInit() {
     this.dataSource = this._loading.asObservable();
 
+    let defaultPageSize = 10;
+    if (this.tableConfig && this.tableConfig.paginationOptions && this.tableConfig.paginationOptions.defaultPageSize) {
+      defaultPageSize = this.tableConfig.paginationOptions.defaultPageSize;
+    }
     const params: TableDataParams = {
       pageNumber: 0,
-      pageSize: 10,
+      pageSize: defaultPageSize,
       cursor: 0,
       search: '',
       sort: [],

@@ -1,5 +1,5 @@
-<mat-form-field>
-    <mat-label>Filter</mat-label>
+<mat-form-field *ngIf="tableConfig?.isSearchable">
+    <mat-label>Search</mat-label>
     <input matInput [formControl]="searchInput">
 </mat-form-field>
 
@@ -8,7 +8,7 @@
     <span class="text" matSuffix>/{{totalPages}}</span>
   </mat-form-field>-->
 
-<table class="simple-table" mat-table [dataSource]="data" matSort>
+<table class="simple-table" mat-table [dataSource]="data" matSort (matSortChange)="sortChange($event)">
 
     <!-- Checkbox Column, selection column -->
     <ng-container matColumnDef="select">
@@ -53,6 +53,7 @@
     <tr mat-row *matRowDef="let row; columns: headers;"></tr>
 </table>
 
-<ng-container *ngIf="hasPagination">
-    <lib-pagination [pageSize]="10" [length]="length" (page)="pageEvent($event)" [disabled]="false"></lib-pagination>
+<ng-container *ngIf="tableConfig?.isPaginated">
+    <lib-pagination [pageSize]="tableConfig?.paginationOptions?.defaultPageSize" [length]="length"
+        (page)="pageEvent($event)" [pageSizeOptions]="tableConfig?.paginationOptions?.pageSizeOptions"></lib-pagination>
 </ng-container>
