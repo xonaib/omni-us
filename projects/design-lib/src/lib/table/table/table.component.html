@@ -1,7 +1,17 @@
-<mat-form-field *ngIf="tableConfig?.isSearchable">
-    <mat-label>Search</mat-label>
-    <input matInput [formControl]="searchInput">
-</mat-form-field>
+<div>
+    <mat-form-field *ngIf="tableConfig?.isSearchable" style="display: inline-block; width:75%;">
+        <mat-label>Search</mat-label>
+        <input matInput [formControl]="searchInput">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="tableConfig?.showColumnsToggle" style="display: inline-block; width:20%;">
+        <mat-label>Toppings</mat-label>
+        <mat-select [formControl]="headersDisplayControl" multiple>
+            <mat-option *ngFor="let column of tableColumns" [value]="column.columnDef">{{column.header}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
 
 <!--  <mat-form-field appearance="outline">
     <input matInput [formControl]="pageNumInput" value="1">
@@ -27,7 +37,7 @@
     <!-- for columns that do not have any template 
     mat-sort-header="{{ column.columnDef }}" [disabled]="column.isSortable === false"
  -->
-    <ng-container #someDiv *ngFor="let column of columnsWithoutTemplate" [matColumnDef]="column.columnDef">
+    <ng-container #someDiv *ngFor="let column of columns" [matColumnDef]="column.columnDef">
         <th *matHeaderCellDef>
 
             <span mat-sort-header [disabled]="column.isSortable !== true">{{ column.header }}</span>
@@ -48,8 +58,8 @@
 
     <!--<ng-content></ng-content>-->
 
-    <tr mat-header-row *matHeaderRowDef="headers; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: headers;"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
 <ng-container *ngIf="tableConfig?.isPaginated">

@@ -15,7 +15,7 @@ import {
   Subject,
   BehaviorSubject
 } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
+import { takeUntil, debounceTime, skip } from 'rxjs/operators';
 import { MatTable, MatColumnDef, PageEvent, Sort } from '@angular/material';
 import {
   FFColumnDef,
@@ -89,6 +89,8 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   get headers(): string[] { return this._headers; }
   private _headers: string[];
 
+  displayedColumns: string[];
+
   /** Subject that emits when the component has been destroyed. */
   private _onDestroy = new Subject<void>();
 
@@ -101,8 +103,8 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
 
   private _columnDefsByName = new Map<string, FFColumnDef>();
 
-  get columnsWithoutTemplate(): FFColumnDef[] { return this._columnsWithoutTemplate; }
-  private _columnsWithoutTemplate: FFColumnDef[] = [];
+  get columns(): FFColumnDef[] { return this._columns; }
+  private _columns: FFColumnDef[] = [];
 
   /** should show pagination */
   // tslint:disable-next-line: no-inferrable-types
@@ -166,8 +168,10 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   columnFilterApply(filter: TableFilter): void {
+    if (!filter) {
+      return;
+    }
 
-    debugger;
     const anyFilterUpdated = this.updateFilters(filter);
 
     if (anyFilterUpdated) {
@@ -185,6 +189,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   updateFilters(filter: TableFilter): boolean {
     let isFilterApplied = false;
 
+    debugger;
     // if already set, then update
     // else if not being cancelled, and not already set, then add
     if (this._columnFilters.has(filter.field)) {
@@ -239,23 +244,10 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     return `1`;
   }
 
-  templateFor: string;
-  onFilterClick(templateFor: string) {
-
-    this.templateFor = templateFor;
-  }
-
-  showfilters(event): void {
-    var elems = document.querySelectorAll("th .filters");
-    [].forEach.call(elems, function (el) {
-      if (el != event.target) {
-        el.classList.remove("show-filter");
-      }
-    });
-    event.target.classList.toggle('show-filter');
-  }
 
 
+
+  headersDisplayControl = new FormControl();
 
   constructor() { }
 
@@ -282,7 +274,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   ngOnInit() {
-   
+
   }
 
   ngAfterContentInit() {
@@ -346,6 +338,14 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     // reset stuff
     this._columnDefsByName.clear();
     this._headers = [];
+    this.headersDisplayControl = new FormControl();
+    this.displayedColumns = [];
+
+    this.headersDisplayControl.valueChanges.pipe(
+      takeUntil(this._onDestroy), skip(1))
+      .subscribe((value: string[]) => {
+        this.displayedColumns = value;
+      });
 
     // for each column definition, add to our headers
     // this.columnDefs has the templates passed as ng-content
@@ -354,29 +354,25 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
 
       // push to headers
       // preserves ordering
+
       this._headers.push(col.columnDef);
+      if (!col.isHidden) {
+        this.displayedColumns.push(col.columnDef);
+      }
       // set in map
+
       this._columnDefsByName.set(col.columnDef, col);
 
-      // find if template has been provided for this column
-      const templateColumn: MatColumnDef = this.columnDefs.find(f => f.name === col.columnDef);
-
-      // when not found, then
-      if (templateColumn == null && col.columnDef !== 'select') {
-        this._columnsWithoutTemplate.push(col);
+      if (col.columnDef !== 'select') {
+        this._columns.push(col);
       }
     });
 
+    this.headersDisplayControl.setValue(this.displayedColumns);
     // push column templates that have been provided
-    this.columnDefs.forEach((columnDef: MatColumnDef) => {
+    /*this.columnDefs.forEach((columnDef: MatColumnDef) => {
       this.table.addColumnDef(columnDef);
-
-      //const headerColumn : MatSort = {};
-      //this.sort.register(columnDef);
-    });
-    //debugger;
-    // this.sort.register()
-    // this.componentSort
+    }); */
   }
 
   ngOnDestroy() {

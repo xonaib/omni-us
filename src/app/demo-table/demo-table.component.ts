@@ -32,6 +32,7 @@ export class DemoTableComponent implements OnInit {
   tableConfig: TableConfig = {
     isSearchable: true,
     isPaginated: true,
+    showColumnsToggle: true,
     paginationOptions: {
       defaultPageSize: 25,
       pageSizeOptions: [5, 10, 25, 50, 100]
@@ -41,7 +42,7 @@ export class DemoTableComponent implements OnInit {
   columns: FFColumnDef[] = [
     {
       columnDef: 'select',
-      header: 'Title',
+      header: 'Select',
     },
     {
       columnDef: 'title',
@@ -69,7 +70,8 @@ export class DemoTableComponent implements OnInit {
       columnDef: 'releaseDate',
       isSortable: false,
       header: 'Date',
-      cellType: CellType.date
+      cellType: CellType.date,
+      isHidden: true
     },
     /*{
       columnDef: 'custom',

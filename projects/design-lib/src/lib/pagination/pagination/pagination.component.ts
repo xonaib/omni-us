@@ -53,7 +53,6 @@ export class PaginationComponent implements OnInit, OnDestroy {
   @Input()
   get pageSize(): number { return this._pageSize; }
   set pageSize(value: number) {
-    debugger;
     this._pageSize = Math.max(coerceNumberProperty(value), 10);
     this._updateDisplayedPageSizeOptions();
 

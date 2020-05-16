@@ -10,11 +10,13 @@ export interface FFColumnDef {
     width?: string;
     alignment?: string;
     isEditable?: boolean;
+    isHidden?: boolean;
 }
 
 export interface TableConfig {
     isSearchable?: boolean;
     isPaginated?: boolean;
+    showColumnsToggle?: boolean;
     paginationOptions?: PaginationOptions;
 }
 

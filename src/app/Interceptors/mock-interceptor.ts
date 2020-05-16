@@ -32,7 +32,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         filteredResults = this.filterItems(books, params.filter);
 
         // to-do: map keys from interface
-        const searchKeys = ['author', 'title'];
+        const searchKeys = ['author', 'title', 'price', 'rating'];
         filteredResults = this.searchInItems(filteredResults, params.search, searchKeys);
 
         const itemsCount = filteredResults.length;
@@ -96,12 +96,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         filters.forEach((filter: TableFilter) => {
             if (filter.method === 'equality') {
 
-                const comparator = (filter.parameters as string);
+                const comparator = (filter.parameters as string).toLowerCase();
 
                 // if filter parameter type is string, and is not empty
                 if (typeof filter.parameters === 'string' && !STRING.isNullOrEmpty(comparator)) {
 
-                    results = results.filter(f => (f[filter.field]) === comparator);
+                    results = results.filter(f => (f[filter.field] as string).toLowerCase() === comparator);
                 }
 
             } else if (filter.method === 'range') {
@@ -135,7 +135,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
         keys.forEach((key: string) => {
 
-            const matches = items.filter(f => (f[key] as string).toLowerCase().includes(query));
+            const matches = items.filter(f => String(f[key]).toLowerCase().includes(query));
 
             if (isArray(matches) && matches.length > 0) {
                 result = result.concat(...matches);
