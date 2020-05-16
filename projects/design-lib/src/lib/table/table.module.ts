@@ -6,7 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule, MatTableModule } from '@angular/material';
+import { MatIconModule, MatTableModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { MatSortModule } from '@angular/material/sort';
 
 
@@ -54,7 +54,9 @@ import { ColumnFilterComponent } from './column-filter/column-filter.component';
     MatButtonModule,
     MatSortModule,
     MatTableModule,
-    PaginationModule
+    PaginationModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     TableComponent,

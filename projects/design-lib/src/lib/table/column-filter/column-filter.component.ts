@@ -25,6 +25,10 @@ export class ColumnFilterComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
+    this.resetFilter();
+  }
+
+  resetFilter() {
     this.filter = {
       field: this.field,
       method: 'equality',
@@ -44,8 +48,15 @@ export class ColumnFilterComponent implements OnInit, OnDestroy {
 
   /** When filter is applied */
   applyFilter(): void {
-    debugger;
     this.filterApply.emit(this.filter);
+  }
+
+  cancelFilter(): void {
+    this.filter.isCancelled = true;
+
+    this.filterApply.emit(this.filter);
+
+    this.resetFilter();
   }
 
   ngOnDestroy() {

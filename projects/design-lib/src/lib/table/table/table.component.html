@@ -1,12 +1,12 @@
-<p>table works!</p>
-<mat-menu #appMenu="matMenu">
-    <button mat-menu-item>Settings</button>
-    <button mat-menu-item>Help</button>
-  </mat-menu>
-  
-  <button mat-icon-button [matMenuTriggerFor]="appMenu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput [formControl]="searchInput">
+</mat-form-field>
+
+<!--  <mat-form-field appearance="outline">
+    <input matInput [formControl]="pageNumInput" value="1">
+    <span class="text" matSuffix>/{{totalPages}}</span>
+  </mat-form-field>-->
 
 <table class="simple-table" mat-table [dataSource]="data" matSort>
 
@@ -29,58 +29,15 @@
  -->
     <ng-container #someDiv *ngFor="let column of columnsWithoutTemplate" [matColumnDef]="column.columnDef">
         <th *matHeaderCellDef>
-            
 
-            <!--
-            <mat-menu #appMenu="matMenu">
-                <button mat-menu-item>Settings</button>
-                <button mat-menu-item>Help</button>
-              </mat-menu>
-              
-              <button mat-icon-button [matMenuTriggerFor]="appMenu">
-                <mat-icon>more_vert</mat-icon>
-              </button> -->
+            <span mat-sort-header [disabled]="column.isSortable !== true">{{ column.header }}</span>
 
-            <!--<span (click)="onFilterClick( column.columnDef);" class="filter-icon filters">
-                <mat-icon>keyboard_arrow_down</mat-icon>
-            </span> -->
-            <span mat-sort-header>{{ column.header }}</span>
+            <ng-container *ngIf="column.hasColumnFilters">
+                <lib-column-filter [field]="column.columnDef" (filterApply)="columnFilterApply($event)">
+                </lib-column-filter>
+            </ng-container>
 
-            <lib-column-filter [field]="column.columnDef" (filterApply)="columnFilterApply($event)"></lib-column-filter>
 
-           
-            <!--<span class="filters" (click)="Showfilters($event);"></span>
-
-            <div class="filter-popup open-right">
-                <div class="filter-header">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h4>Filters</h4>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            13795 Records
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-sort-select">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <a href="javascript:void(0);" class="select-unselect">
-                                Select All
-                            </a>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <span class="sort-icon asc sorted mr-2"></span>
-                            <span class="sort-icon desc"></span>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="filter-list-container" style="height: 300px;">
-    
-                </div>
-            </div> -->
 
 
         </th>

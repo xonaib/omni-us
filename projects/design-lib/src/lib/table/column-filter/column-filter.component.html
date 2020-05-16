@@ -53,6 +53,7 @@
 
     <div mat-menu-item [disableRipple]="true">
         <button mat-flat-button color="green" class="medium" (click)="applyFilter()">Apply</button>
+        <button mat-flat-button color="green" class="medium" (click)="cancelFilter()">Cancel</button>
     </div>
 
     {{filter | json}}

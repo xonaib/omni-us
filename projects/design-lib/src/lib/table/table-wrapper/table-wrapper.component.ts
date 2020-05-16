@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { FFColumnDef, TableSort, TableFilter, TableDataParams } from 'projects/design-lib/src/Interfaces/table-interface';
+import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Observable, Subject, observable, of } from 'rxjs';
+import { FFColumnDef, TableSort, TableFilter, TableDataParams, TableEventType } from 'projects/design-lib/src/Interfaces/table-interface';
 
 import { DesignLibService } from '../../../Services/design-lib.service';
 import { PageEvent } from '@angular/material';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'lib-table-wrapper',
@@ -18,6 +19,17 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
   // tslint:disable-next-line: no-inferrable-types
   @Input() hasPagination: boolean = true;
   @Input() length: number;
+
+  // Event Emitters for data
+  @Output() readonly onDataLoadStarted: EventEmitter<void> = new EventEmitter<void>();
+  @Output() readonly onDataLoadCompleted: EventEmitter<void> = new EventEmitter<void>();
+  @Output() readonly onDataLoadFailed: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output() readonly onSearch: EventEmitter<void> = new EventEmitter<void>();
+  @Output() readonly onFilters: EventEmitter<void> = new EventEmitter<void>();
+  @Output() readonly onSort: EventEmitter<void> = new EventEmitter<void>();
+  @Output() readonly onPagination: EventEmitter<void> = new EventEmitter<void>();
+
 
   constructor(private service: DesignLibService) { }
 
@@ -53,10 +65,46 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
 
     this.fetchDataFromAPI(params);
   }
+
+  /** Emit change type events */
+  emitChangeTypeEvent(params: TableDataParams): void {
+    if (params.eventType === TableEventType.pagination) {
+      this.onPagination.emit();
+    } else if (params.eventType === TableEventType.columnFilter) {
+      this.onFilters.emit();
+    } else if (params.eventType === TableEventType.search) {
+      this.onSearch.emit();
+    } else if (params.eventType === TableEventType.sort) {
+      this.onSort.emit();
+    }
+  }
+
+  /** Listener for change type events */
+  tableChanges(params: TableDataParams): void {
+    this.emitChangeTypeEvent(params);
+
+    this.fetchDataFromAPI(params);
+  }
+
   fetchDataFromAPI(params: TableDataParams): void {
+    this.onDataLoadStarted.emit();
 
     this.service.getTableData<T>(params.pageSize, params.pageNumber, params.cursor, params.search, params.sort, params.filter)
+      .pipe(catchError(err => {
+
+        this.onDataLoadFailed.emit();
+        return of(null);
+      }))
       .subscribe((dt: [number, T[]]) => {
+
+        // data load failed
+        if (dt == null) {
+          this.onDataLoadFailed.emit();
+          return;
+        }
+
+        // data loaded
+        this.onDataLoadCompleted.emit();
 
         this.length = dt[0];
         this._loading.next(dt[1]);

@@ -7,7 +7,8 @@ import { Book } from '../Interfaces/Book-interface';
 import { books } from '../../assets/table-data';
 import { isNumber, isArray } from 'util';
 import { switchMap } from 'rxjs/operators';
-//import 'rxjs/add/operator/delay';
+
+import { STRING } from '../../../projects/design-lib/src/Utils/string-property';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
@@ -26,11 +27,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             //return of(new HttpResponse({ status: 200, body: book }));
         }
 
+        debugger;
         let filteredResults: Book[] = [];
         filteredResults = this.filterItems(books, params.filter);
 
         // to-do: map keys from interface
-        const searchKeys = ['author', 'title', 'releaseDate', 'price', 'rating'];
+        const searchKeys = ['author', 'title'];
         filteredResults = this.searchInItems(filteredResults, params.search, searchKeys);
 
         const itemsCount = filteredResults.length;
@@ -81,10 +83,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         filters.forEach((filter: TableFilter) => {
             if (filter.method === 'equality') {
 
-                const comparator = Number(filter.parameters);
-                if (typeof filter.parameters === 'string' && isNumber(comparator)) {
+                const comparator = (filter.parameters as string);
 
-                    results = results.filter(f => (f[filter.field] as number) === comparator);
+                // if filter parameter type is string, and is not empty
+                if (typeof filter.parameters === 'string' && !STRING.isNullOrEmpty(comparator)) {
+
+                    results = results.filter(f => (f[filter.field]) === comparator);
                 }
 
             } else if (filter.method === 'range') {
@@ -92,12 +96,17 @@ export class HttpRequestInterceptor implements HttpInterceptor {
                     const startValue = filter.parameters[0];
                     const endValue = filter.parameters[1];
 
-                    results = results.filter(f => (f[filter.field] as number) >= startValue && (f[filter.field] as number) <= endValue);
+                    // only filter if start and end values are provided'']
+
+
+                    if (startValue !== 0 && endValue !== 0) {
+                        results = results.filter(f => (f[filter.field] as number) >= startValue && (f[filter.field] as number) <= endValue);
+                    }
                 }
             }
         });
 
-        return null;
+        return results;
     }
 
     getItemById<T>(items: T[], id: number | string, key: string): T {
@@ -111,9 +120,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         let result: T[] = [];
 
         keys.forEach((key: string) => {
+
             const matches = items.filter(f => (f[key] as string).includes(query));
 
-            result = result.concat(...matches);
+            if (isArray(matches) && matches.length > 0) {
+                result = result.concat(...matches);
+            }
         });
 
         return result;

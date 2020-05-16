@@ -15,17 +15,19 @@ import {
   Subject,
   BehaviorSubject
 } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 import { MatTable, MatColumnDef, PageEvent } from '@angular/material';
 import {
   FFColumnDef,
   TableSort,
   TableFilter,
-  TableDataParams
+  TableDataParams,
+  TableEventType
 } from 'projects/design-lib/src/Interfaces/table-interface';
 
 import { DesignLibService } from '../../../Services/design-lib.service';
 import { PaginationComponent } from '../../pagination/pagination/pagination.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'lib-table',
@@ -110,10 +112,27 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   /** Event emitted when the paginator changes the page size or page index. */
   @Output() readonly page: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
 
- /** Event emitted when the paginator changes the page size or page index. */
- @Output('table') readonly tableEvents: EventEmitter<TableDataParams> = new EventEmitter<TableDataParams>();
+  /** Event emitted when the paginator changes the page size or page index. */
+  @Output('table') readonly tableEvents: EventEmitter<TableDataParams> = new EventEmitter<TableDataParams>();
 
   private _tableParams: TableDataParams;
+  private _columnFilters: Map<string, TableFilter> = new Map<string, TableFilter>();
+
+  searchInput: FormControl;
+  searchCtrlSub: Subscription;
+
+  listenSearchInput(): void {
+    this.searchInput = new FormControl('');
+
+    this.searchCtrlSub = this.searchInput.valueChanges.pipe(debounceTime(500))
+      .subscribe((query: string) => {
+        this._tableParams.search = query;
+        this._tableParams.eventType = TableEventType.search;
+
+        this.emitTableChanges();
+        console.log('query', query);
+      });
+  }
 
   pageEvent(event: PageEvent) {
     //this._paginationData = event;
@@ -121,16 +140,52 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
 
     this._tableParams.pageNumber = event.pageIndex;
     this._tableParams.pageSize = event.pageSize;
+    this._tableParams.eventType = TableEventType.pagination;
 
     this.emitTableChanges();
   }
 
- 
-  columnFilterApply(filter: TableFilter): void {
-    debugger;
-    this._tableParams.filter.push(filter);
 
-    this.emitTableChanges();
+  columnFilterApply(filter: TableFilter): void {
+
+    debugger;
+    const anyFilterUpdated = this.updateFilters(filter);
+
+    if (anyFilterUpdated) {
+      this._tableParams.filter = Array.from(this._columnFilters.values());
+
+      this._tableParams.eventType = TableEventType.columnFilter;
+      this.emitTableChanges();
+    }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+  }
+
+  updateFilters(filter: TableFilter): boolean {
+    let isFilterApplied = false;
+
+    // if already set, then update
+    // else if not being cancelled, and not already set, then add
+    if (this._columnFilters.has(filter.field)) {
+      isFilterApplied = true;
+
+      // if being removed, then delete from list
+      // else, update filter entry
+      if (filter.isCancelled) {
+        this._columnFilters.delete(filter.field);
+      } else {
+        this._columnFilters.set(filter.field, filter);
+      }
+
+    } else if (!filter.isCancelled) {
+      isFilterApplied = true;
+
+      this._columnFilters.set(filter.field, filter);
+    }
+
+    return isFilterApplied;
   }
 
   emitTableChanges(): void {
@@ -229,10 +284,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
 
     this._observeRenderChanges();
 
-    // this._observerSelectionChanges();
-
-    // this._observerSortChanges();
-
+    this.listenSearchInput();
   }
 
   /** Set up a subscription for the data provided by the data source. */
@@ -302,6 +354,10 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   ngOnDestroy() {
+    if (this.searchCtrlSub != null) {
+      this.searchCtrlSub.unsubscribe();
+    }
+
     this._onDestroy.next();
     this._onDestroy.complete();
   }

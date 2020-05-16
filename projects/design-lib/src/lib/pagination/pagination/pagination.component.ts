@@ -29,7 +29,7 @@ const DEFAULT_PAGE_SIZE = 50;
   styleUrls: ['./pagination.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnInit, OnDestroy {
   /** Event emitted when the paginator changes the page size or page index. */
   @Output() readonly page: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
 

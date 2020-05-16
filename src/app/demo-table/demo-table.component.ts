@@ -41,12 +41,15 @@ export class DemoTableComponent implements OnInit {
     {
       columnDef: 'title',
       header: 'Title',
+      isSortable: true,
+      hasColumnFilters: true,
     },
 
     {
       columnDef: 'author',
-      isSortable: false,
-      header: 'Author'
+      isSortable: true,
+      header: 'Author',
+      hasColumnFilters: true,
     },
     {
       columnDef: 'price',
@@ -75,39 +78,13 @@ export class DemoTableComponent implements OnInit {
   ];
 
   //dataSourceAll: Book[] = [];
-  length = 35;
+
 
   constructor() { }
 
   ngOnInit() {
 
-    /*
-    this.dataSourceAll = [];
-
-    for (let i = 1; i < this.length; i++) { this.dataSourceAll.push(this.createNewBook(i)); }
-
-    this.dataSource = this._loading.asObservable();
-
-    const someBooks: Book[] = this.dataSourceAll.slice(0, 10);
-    */
-    /* timer(1200)
-      .subscribe(s => {
-        this._loading.next(someBooks);
-      }); */
   }
 
-  /* createNewBook(index: number): Book {
-    const book: Book = {
-      author: `author ${index}`,
-      title: `title ${index}`,
-      id: index,
-      age: Math.round(Math.random() * 20),
-      currency: Math.round(1000 + Math.random() * 2000),
-      date: new Date(),
-      time: new Date(),
-      dateTime: new Date(),
-    };
 
-    return book;
-  } */
 }

@@ -6,6 +6,20 @@ export interface FFColumnDef {
     displayIndex?: number;
     cellType?: CellType.text | CellType.currency | CellType.date | CellType.time | CellType.dateTime | CellType.custom,
     options?: any;
+    hasColumnFilters?: boolean;
+    width?: string;
+    alignment?: string;
+}
+
+export interface TableConfig {
+    isSearchable: boolean;
+    isPaginated: boolean;
+    paginationOptions?: PaginationOptions;
+}
+
+export interface PaginationOptions {
+    defaultPageSize: number;
+    pageSizeOptions: number[];
 }
 
 export enum CellType {
@@ -34,6 +48,7 @@ export interface TableFilter {
     field: string;
     method: 'equality' | 'range';
     parameters: string | number[];
+    isCancelled?: boolean;
 }
 
 export interface TableDataParams {
@@ -43,5 +58,12 @@ export interface TableDataParams {
     search: string;
     sort: TableSort[];
     filter: TableFilter[];
+    eventType?: TableEventType;
 }
 
+export enum TableEventType {
+    sort,
+    columnFilter,
+    pagination,
+    search
+}

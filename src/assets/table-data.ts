@@ -8,146 +8,29 @@ function generateRandomBooks(count: number) {
             id: i,
             title: `Random title ${i}`,
             author: `Random author ${i}`,
-            releaseDate: new Date(),
-            price: 1100,
-            rating: 3
+            releaseDate: randomDateGenerator(),
+            price: randomPriceGenerator(),
+            rating: randomRatingGenerator(),
         });
     }
+
+    return books;
 }
-export const books: Book[] = [
-    {
-        id: 1,
-        title: 'Book 1',
-        author: 'Random 1',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 2,
-        title: 'Book 2',
-        author: 'Random 2',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 3,
-        title: 'Book 3',
-        author: 'Random 3',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 4,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    }, {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    },
-    {
-        id: 5,
-        title: 'Book 5',
-        author: 'Random 5',
-        releaseDate: new Date(),
-        price: 1100,
-        rating: 3,
-    }
-];
+
+function randomDateGenerator() {
+    const year = 2000 + Math.round(Math.random() * 20); 
+    const month = 1 + Math.round(Math.random() * 12);
+    const day = 1 + Math.round(Math.random() * 30);
+
+    return new Date(year, month, day);
+}
+
+function randomPriceGenerator() {
+    return Math.round(1000 + Math.random() * 500);
+}
+
+function randomRatingGenerator() {
+    return Math.round(Math.random() * 5);
+}
+
+export const books = generateRandomBooks(100);
