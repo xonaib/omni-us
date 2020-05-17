@@ -33,7 +33,7 @@ export class DesignLibService {
   getTableData<T>(
     pageSize: number, pageNumber: number, cursor: number, search: string,
     sort: TableSort[], filter: TableFilter[]): Observable<[number, T[]]> {
-debugger;
+
     type T1 = [number, T[]];
 
     const options = {

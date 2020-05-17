@@ -30,6 +30,20 @@ import { DesignLibService } from '../../../Services/design-lib.service';
 import { PaginationComponent } from '../../pagination/pagination/pagination.component';
 import { FormControl } from '@angular/forms';
 
+/**
+ * The component only does one thing: render table
+ * Pagination, Column Filters, Sort, Search, Toggle Columns are supported through TableConfig
+ *
+ * Expects data to be passed as an Array or an observable of Array
+ * The idea was to make this a dumb component
+ *
+ * Any table events, are passed over to any listener
+ *
+ * Some basic parameters to make this work:
+ * columns is an array of column configuration
+ * dataSource is an array or observable of array
+ * Please refer to demo-table in src/app/modules/demos for a working example
+ */
 @Component({
   selector: 'lib-table',
   templateUrl: './table.component.html',
@@ -99,7 +113,6 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
 
   @ViewChild(MatTable, { static: true }) table: MatTable<T>;
   @ContentChildren(MatColumnDef) columnDefs: QueryList<MatColumnDef>;
-  @ViewChildren('someDiv') staticColumnDefs: QueryList<MatColumnDef>;
 
   private _columnDefsByName = new Map<string, ColumnDef>();
 
@@ -148,9 +161,6 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   pageEvent(event: PageEvent) {
-    // this._paginationData = event;
-    // this.page.emit(event);
-
     this._tableParams.pageNumber = event.pageIndex;
     this._tableParams.pageSize = event.pageSize;
     this._tableParams.eventType = TableEventType.pagination;
@@ -196,7 +206,6 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   updateFilters(filter: TableFilter): boolean {
     let isFilterApplied = false;
 
-    debugger;
     // if already set, then update
     // else if not being cancelled, and not already set, then add
     if (this._columnFilters.has(filter.field)) {
@@ -242,16 +251,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     const numRows = this.data.length;
     return numSelected === numRows;
   }
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: T): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    // return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-    return `1`;
-  }
-
-
+  
   constructor(private service: DesignLibService) { }
 
   private _switchDataSource(value: T[] | Observable<T[]>) {

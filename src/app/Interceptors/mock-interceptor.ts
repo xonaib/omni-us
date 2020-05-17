@@ -96,7 +96,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             return items;
         }
 
-        debugger;
         sorts.forEach((sort: TableSort) => {
             // sort if direction is provided
             if (sort.method !== '') {

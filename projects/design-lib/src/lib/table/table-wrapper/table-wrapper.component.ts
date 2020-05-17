@@ -6,6 +6,17 @@ import { DesignLibService } from '../../../Services/design-lib.service';
 import { PageEvent } from '@angular/material';
 import { catchError } from 'rxjs/operators';
 
+
+/**
+ * This is a wrapper around lib-table
+ * This is more like a pass-through, the smart around the the dumb lib-table
+ * 
+ * While lib-table expects data,
+ * This component is responsible for fetching data from our API
+ * based on any table parameters such as search or table filters
+ *
+ * Being a wrapper, this could have been equally replaced by a directive as well. 
+ */
 @Component({
   selector: 'lib-table-wrapper',
   templateUrl: './table-wrapper.component.html',
@@ -77,13 +88,12 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
 
   sendRowUpdateRequest(row: T) {
     this.service.updateTableRow<T>(row)
-    .pipe(catchError(err => {
-      debugger;
-      return of(null);
-    }))
-    .subscribe((data: any) => {
-      debugger;
-    });
+      .pipe(catchError(err => {
+        return of(null);
+      }))
+      .subscribe((data: boolean) => {
+        console.log('row updated');
+      });
   }
 
   /** Listener for change type events */

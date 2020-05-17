@@ -40,7 +40,6 @@ describe('TableComponent', () => {
       let fixture = TestBed.createComponent(MatTableApp);
       fixture.detectChanges();
 
-      // debugger;
       const renderedColumns = fixture.nativeElement.querySelector('.mat-table thead tr').childElementCount;
       expect(renderedColumns).toBeGreaterThan(0);
 

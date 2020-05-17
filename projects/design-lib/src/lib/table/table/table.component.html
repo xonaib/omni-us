@@ -13,10 +13,6 @@
 </div>
 
 
-<!--  <mat-form-field appearance="outline">
-    <input matInput [formControl]="pageNumInput" value="1">
-    <span class="text" matSuffix>/{{totalPages}}</span>
-  </mat-form-field>-->
 
 <table class="simple-table" mat-table [dataSource]="data" matSort (matSortChange)="sortChange($event)"
     [ngStyle]="{'width': tableConfig?.tableWidth}">
@@ -25,19 +21,17 @@
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef style="width: 30px;">
             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-                [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                [indeterminate]="selection.hasValue() && !isAllSelected()">
             </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
             <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                [checked]="selection.isSelected(row)">
             </mat-checkbox>
         </td>
     </ng-container>
 
-    <!-- for columns that do not have any template 
-    mat-sort-header="{{ column.columnDef }}" [disabled]="column.isSortable === false"
- -->
+
     <ng-container #someDiv *ngFor="let column of columns" [matColumnDef]="column.columnDef">
         <th *matHeaderCellDef [ngStyle]="{'width': (column.width ? (column.width) :'100px')}">
 
@@ -62,7 +56,6 @@
         </td>
     </ng-container>
 
-    <!--<ng-content></ng-content>-->
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
