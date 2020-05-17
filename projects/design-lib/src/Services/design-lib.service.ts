@@ -61,6 +61,8 @@ export class DesignLibService {
     return this.http.post<any>(`${this.updateRowUrl}`, row, options);
   }
 
+
+  /** Returns list of keys on object */
   getObjectProperties(item: any, removeIdCol: boolean = true): string[] {
     let keysIterator = Object.keys(item);
 

@@ -9,10 +9,11 @@ import { isNumber, isArray } from 'util';
 import { switchMap } from 'rxjs/operators';
 
 import { STRING } from '../../../projects/design-lib/src/Utils/string-property';
+import { DesignLibService } from '../../../projects/design-lib/src/Services/design-lib.service';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
-    constructor(private injector: Injector) { }
+    constructor(private injector: Injector, private service: DesignLibService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -41,10 +42,11 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     getSearchableKeys(): string[] {
 
         const book = new Book();
-        const keys: Array<string> = Object.keys(book).filter(m => m !== 'id').map(key => {
+        return this.service.getObjectProperties(book);
+        /*const keys: Array<string> = Object.keys(book).filter(m => m !== 'id').map(key => {
             return key;
         });
-        return keys;
+        return keys; */
     }
 
     /** Send Mock Table data */
