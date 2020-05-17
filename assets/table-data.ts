@@ -1,7 +1,7 @@
 import { Book } from '../app/Interfaces/Book-interface';
 
 const authors = ['Stephen Hawking', 'Ian Goodfellow', 'J k Rowling', 'Fyodor Dostoevsky', 'John Steinbeck'];
-const titles = ['A breif history of time', 'Generator adversial nets', 'The prisoner of Azkaban',
+const titles = ['A brief history of time', 'Generator adversial nets', 'The prisoner of Azkaban',
     'The Brothers Karamazov', 'The grapes of wrath'];
 
 
@@ -12,9 +12,9 @@ function generateRandomBooks(count: number) {
         const randomIndex = (Math.round(Math.random() * (authors.length - 1)));
 
         books.push({
-            id: i,
-            title: authors[randomIndex],
-            author: titles[randomIndex],
+            id: (i + 1),
+            title: titles[randomIndex],
+            author: authors[randomIndex],
             releaseDate: randomDateGenerator(),
             price: randomPriceGenerator(),
             rating: randomRatingGenerator(),
