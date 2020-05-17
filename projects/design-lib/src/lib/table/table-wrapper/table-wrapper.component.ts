@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Observable, Subject, observable, of } from 'rxjs';
-import { FFColumnDef, TableSort, TableFilter, TableDataParams, TableEventType, TableConfig } from 'projects/design-lib/src/Interfaces/table-interface';
+import { ColumnDef, TableSort, TableFilter, TableDataParams, TableEventType, TableConfig } from 'projects/design-lib/src/Interfaces/table-interface';
 
 import { DesignLibService } from '../../../Services/design-lib.service';
 import { PageEvent } from '@angular/material';
@@ -15,7 +15,7 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
 
   // @Input() dataSource: T[] | Observable<T[]>;
   @Input() data: T[];
-  @Input() tableColumns: FFColumnDef[];
+  @Input() tableColumns: ColumnDef[];
 
   @Input() length: number;
 

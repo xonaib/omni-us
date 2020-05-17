@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {
-  FFColumnDef,
+  ColumnDef,
   CurrencyOptions,
   CellType,
   TableConfig
@@ -26,7 +26,7 @@ export class DemoTableComponent implements OnInit {
     }
   };
 
-  columns: FFColumnDef[] = [
+  columns: ColumnDef[] = [
     {
       columnDef: 'select',
       header: 'Select',

@@ -1,5 +1,5 @@
 
-export interface FFColumnDef {
+export interface ColumnDef {
     header?: string;
     isSortable?: boolean;
     columnDef: string;

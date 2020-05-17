@@ -1,6 +1,6 @@
-import { FFColumnDef } from '../../../../Interfaces/table-interface';
+import { ColumnDef } from '../../../../Interfaces/table-interface';
 
 export interface CellComponent {
-    column: FFColumnDef;
+    column: ColumnDef;
     row: object;
 }

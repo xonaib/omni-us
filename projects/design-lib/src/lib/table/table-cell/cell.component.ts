@@ -2,7 +2,7 @@ import { Component, ComponentFactoryResolver, Input, ViewChild, OnInit } from '@
 import { CellDirective } from './cell.directive';
 import { CellService } from './cell-types/cell.service';
 import { CellComponent } from './cell-types/cell.component';
-import { FFColumnDef } from '../../../Interfaces/table-interface';
+import { ColumnDef } from '../../../Interfaces/table-interface';
 
 @Component({
     selector: 'lib-table-cell',
@@ -14,7 +14,7 @@ export class TableCellComponent implements OnInit {
     @ViewChild(CellDirective, { static: true }) cellHost: CellDirective;
 
     @Input() row: object;
-    @Input() column: FFColumnDef;
+    @Input() column: ColumnDef;
 
     constructor(
         private cellService: CellService,

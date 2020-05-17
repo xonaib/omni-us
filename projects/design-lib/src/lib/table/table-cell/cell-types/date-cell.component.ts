@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CellComponent } from './cell.component';
-import { FFColumnDef, CellType } from '../../../../Interfaces/table-interface';
+import { ColumnDef, CellType } from '../../../../Interfaces/table-interface';
 
 @Component({
     selector: 'lib-date-cell',
     template: '{{ row[column.columnDef] | date:dateFormat  }}'
 })
 export class DateCellComponent implements CellComponent, OnInit {
-    @Input() column: FFColumnDef;
+    @Input() column: ColumnDef;
     @Input() row: object;
 
     dateFormat = 'short';

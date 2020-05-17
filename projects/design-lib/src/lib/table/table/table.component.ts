@@ -18,7 +18,7 @@ import {
 import { takeUntil, debounceTime, skip } from 'rxjs/operators';
 import { MatTable, MatColumnDef, PageEvent, Sort } from '@angular/material';
 import {
-  FFColumnDef,
+  ColumnDef,
   TableSort,
   TableFilter,
   TableDataParams,
@@ -76,15 +76,15 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   private _data: T[];
 
   @Input()
-  get tableColumns(): FFColumnDef[] { return this._colsDef; }
-  set tableColumns(value: FFColumnDef[]) {
+  get tableColumns(): ColumnDef[] { return this._colsDef; }
+  set tableColumns(value: ColumnDef[]) {
     if (!isArray(value)) {
       return;
     }
 
     this._colsDef = value;
   }
-  private _colsDef: FFColumnDef[] = [];
+  private _colsDef: ColumnDef[] = [];
 
   get headers(): string[] { return this._headers; }
   private _headers: string[];
@@ -101,10 +101,10 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   @ContentChildren(MatColumnDef) columnDefs: QueryList<MatColumnDef>;
   @ViewChildren('someDiv') staticColumnDefs: QueryList<MatColumnDef>;
 
-  private _columnDefsByName = new Map<string, FFColumnDef>();
+  private _columnDefsByName = new Map<string, ColumnDef>();
 
-  get columns(): FFColumnDef[] { return this._columns; }
-  private _columns: FFColumnDef[] = [];
+  get columns(): ColumnDef[] { return this._columns; }
+  private _columns: ColumnDef[] = [];
 
   /** should show pagination */
   // tslint:disable-next-line: no-inferrable-types
@@ -356,7 +356,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     // for each column definition, add to our headers
     // this.columnDefs has the templates passed as ng-content
     // find the difference between colsDef for column's whose template were not provided
-    this._colsDef.forEach((col: FFColumnDef) => {
+    this._colsDef.forEach((col: ColumnDef) => {
 
       // push to headers
       // preserves ordering
