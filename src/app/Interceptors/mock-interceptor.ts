@@ -15,10 +15,35 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     constructor(private injector: Injector) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('Hollow interceptor' + request.url);
+
+        if (request.url.includes('/api/update')) {
+            const book: Book = request.body as Book;
+            return this.updateTableRow(book);
+        }
 
         const params: TableDataParams = request.body as TableDataParams;
+        return this.getTableData(params);
 
+        // return of(new HttpResponse({ status: 200, body: filteredResults }));
+        // return of(new HttpResponse({ status: 200, body: (([1, 2, 3]) as any).default }));
+
+        // return next.handle(request);
+    }
+
+    updateTableRow(row: Book): Observable<HttpEvent<any>> {
+        let response = false;
+        let book = books.find(f => f.id === row.id);
+        debugger;
+        if (book != null) {
+            book = row;
+            response = true;
+        }
+
+        return timer(500).pipe(switchMap(() => of(new HttpResponse({ status: 200, body: response }))));
+    }
+
+    /** Send Mock Table data */
+    getTableData(params: TableDataParams): Observable<HttpEvent<any>> {
         if (params.cursor) {
             const book: Book = this.getItemById(books, params.cursor, 'id');
 
@@ -42,10 +67,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         filteredResults = this.paginateItems(filteredResults, params.pageNumber, params.pageSize);
 
         return timer(500).pipe(switchMap(() => of(new HttpResponse({ status: 200, body: [itemsCount, filteredResults] }))));
-        // return of(new HttpResponse({ status: 200, body: filteredResults }));
-        // return of(new HttpResponse({ status: 200, body: (([1, 2, 3]) as any).default }));
 
-        // return next.handle(request);
     }
 
     paginateItems<T>(items: T[], pageNum: number, pageSize: number): T[] {

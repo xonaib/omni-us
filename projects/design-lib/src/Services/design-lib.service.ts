@@ -12,6 +12,7 @@ import { TableSort, TableFilter, TableDataParams } from '../Interfaces/table-int
 export class DesignLibService {
 
   searchUrl = '/api/endpoint';
+  updateRowUrl = '/api/update';
 
   public httpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -19,16 +20,6 @@ export class DesignLibService {
   });
 
   constructor(private http: HttpClient) { }
-
-  getXyz(query: string): Observable<any> {
-    debugger;
-    return this.http.get<any>(`${this.searchUrl}/?value=${query}`).pipe(
-      catchError(err => of([]))
-    );
-  }
-
-
-
 
   /**
    * Returns List Of Data to show in table
@@ -59,13 +50,14 @@ export class DesignLibService {
     };
 
 
-    return this.http.post<T1>(`${this.searchUrl}`, params, options).pipe(
-      // catchError(err => of([0, []]))
-      // catchError(err => of())
-    );
+    return this.http.post<T1>(`${this.searchUrl}`, params, options);
+  }
 
-    /*return this.http.post<T[]>(`${this.searchUrl}`, params, options).pipe(
-      catchError(err => of([]))
-    ); */
+  updateTableRow<T>(row: T): Observable<any> {
+    const options = {
+      headers: this.httpHeaders
+    };
+
+    return this.http.post<any>(`${this.updateRowUrl}`, row, options);
   }
 }

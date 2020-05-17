@@ -12,7 +12,7 @@ function generateRandomBooks(count: number) {
         const randomIndex = (Math.round(Math.random() * (authors.length - 1)));
 
         books.push({
-            id: i,
+            id: (i + 1),
             title: authors[randomIndex],
             author: titles[randomIndex],
             releaseDate: randomDateGenerator(),

@@ -6,7 +6,7 @@
     "start": "ng serve --open",
     "build": "ng build",
     "test": "ng test",
-    "test-coverage":"ng test --no-watch --code-coverage",
+    "test-coverage": "ng test --no-watch --code-coverage",
     "test-lib": "ng test design-lib",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -17,7 +17,9 @@
     "build:client-and-server-bundles": "ng build --prod && ng run omni-us:build:production",
     "build:i18n-ssr": "npm run build:client-and-server-bundles-i18n && npm run compile:server",
     "serve:ssr": "node dist/server",
-    "run-prod": "npm run build:i18n-ssr && npm run serve:ssr"
+    "run-prod": "npm run build:i18n-ssr && npm run serve:ssr",
+    "package-lib": "npm run build-lib && npm run npm_pack",
+    "showcase-deploy": "ng build --prod --base-href=\"https://xonaib.github.io/omni-us/\" && ngh --dir=dist/omni-us --no-silent"
   },
   "private": true,
   "dependencies": {
@@ -49,6 +51,7 @@
     "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^5.0.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

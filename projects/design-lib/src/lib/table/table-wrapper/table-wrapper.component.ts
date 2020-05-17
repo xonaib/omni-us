@@ -16,7 +16,7 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
   // @Input() dataSource: T[] | Observable<T[]>;
   @Input() data: T[];
   @Input() tableColumns: FFColumnDef[];
- 
+
   @Input() length: number;
 
   @Input() tableConfig: TableConfig;
@@ -56,20 +56,7 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
     this.fetchDataFromAPI(params);
   }
 
-  pageEvent(event: PageEvent) {
-    debugger;
 
-    const params: TableDataParams = {
-      pageNumber: event.pageIndex,
-      pageSize: event.pageSize,
-      cursor: 0,
-      search: '',
-      sort: [],
-      filter: []
-    };
-
-    this.fetchDataFromAPI(params);
-  }
 
   /** Emit change type events */
   emitChangeTypeEvent(params: TableDataParams): void {
@@ -82,6 +69,21 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
     } else if (params.eventType === TableEventType.sort) {
       this.onSort.emit();
     }
+  }
+
+  rowUpdated(row: T): void {
+    this.sendRowUpdateRequest(row);
+  }
+
+  sendRowUpdateRequest(row: T) {
+    this.service.updateTableRow<T>(row)
+    .pipe(catchError(err => {
+      debugger;
+      return of(null);
+    }))
+    .subscribe((data: any) => {
+      debugger;
+    });
   }
 
   /** Listener for change type events */

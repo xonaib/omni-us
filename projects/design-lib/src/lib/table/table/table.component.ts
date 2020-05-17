@@ -120,10 +120,12 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   private _length = 0;
 
   /** Event emitted when the paginator changes the page size or page index. */
-  @Output() readonly page: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
+  // @Output() readonly page: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
 
   /** Event emitted when the paginator changes the page size or page index. */
   @Output('table') readonly tableEvents: EventEmitter<TableDataParams> = new EventEmitter<TableDataParams>();
+
+  @Output() readonly rowUpdated: EventEmitter<T> = new EventEmitter<T>();
 
   private _tableParams: TableDataParams;
   private _columnFilters: Map<string, TableFilter> = new Map<string, TableFilter>();
@@ -187,7 +189,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   onTextFieldBlur(row: T): void {
-    debugger;
+    this.rowUpdated.emit(row);
   }
 
   updateFilters(filter: TableFilter): boolean {
@@ -383,6 +385,12 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     if (this.searchCtrlSub != null) {
       this.searchCtrlSub.unsubscribe();
     }
+
+    this.rowUpdated.next();
+    this.rowUpdated.complete();
+
+    this.tableEvents.next();
+    this.tableEvents.complete();
 
     this._onDestroy.next();
     this._onDestroy.complete();
