@@ -94,6 +94,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             return items;
         }
 
+        debugger;
         sorts.forEach((sort: TableSort) => {
             // sort if direction is provided
             if (sort.method !== '') {
@@ -102,10 +103,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
                 items = items.sort((a, b) => this.compare(a[sort.field], b[sort.field], isAsc));
             }
         });
-
-
-        //return items.sort((a, b) => (a[prop] > b[prop]) ? 1 : ((b[prop] > a[prop]) ? -1 : 0)); */
-
         return items;
     }
     compare(a: number | string, b: number | string, isAsc: boolean) {

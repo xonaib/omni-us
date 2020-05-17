@@ -1,7 +1,7 @@
 import { Book } from '../app/Interfaces/Book-interface';
 
 const authors = ['Stephen Hawking', 'Ian Goodfellow', 'J k Rowling', 'Fyodor Dostoevsky', 'John Steinbeck'];
-const titles = ['A breif history of time', 'Generator adversial nets', 'The prisoner of Azkaban',
+const titles = ['A brief history of time', 'Generator adversial nets', 'The prisoner of Azkaban',
     'The Brothers Karamazov', 'The grapes of wrath'];
 
 

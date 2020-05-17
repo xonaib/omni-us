@@ -280,10 +280,6 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   ngOnInit() {
-
-  }
-
-  ngAfterContentInit() {
     if (!this.table) {
       return;
     }
@@ -309,6 +305,10 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     this._observeRenderChanges();
 
     this.listenSearchInput();
+  }
+
+  ngAfterContentInit() {
+    
   }
 
   /** Set up a subscription for the data provided by the data source. */
