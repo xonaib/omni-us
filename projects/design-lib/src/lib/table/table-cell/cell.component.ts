@@ -2,7 +2,7 @@ import { Component, ComponentFactoryResolver, Input, ViewChild, OnInit } from '@
 import { CellDirective } from './cell.directive';
 import { CellService } from './cell-types/cell.service';
 import { CellComponent } from './cell-types/cell.component';
-import { ColumnDef } from '../../../Interfaces/table-interface';
+import { ColumnDef, CellType } from '../../../Interfaces/table-interface';
 
 @Component({
     selector: 'lib-table-cell',
@@ -25,7 +25,15 @@ export class TableCellComponent implements OnInit {
         this.initCell();
     }
     initCell() {
-        const cellComponent = this.cellService.getCell(this.column.cellType, this.column.options);
+        let cellComponent = null;
+
+        if (this.column.cellType === CellType.custom && this.column.options) {
+            cellComponent = this.column.options.CustomComponent;
+        } else {
+            cellComponent = this.cellService.getCell(this.column.cellType, this.column.options);
+        }
+
+
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(cellComponent);
         const viewContainerRef = this.cellHost.viewContainerRef;
         viewContainerRef.clear();

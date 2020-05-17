@@ -6,7 +6,7 @@ import {
   CellType,
   TableConfig
 } from '../../../../../projects/design-lib/src/Interfaces/table-interface';
-
+import { CustomElementComponent } from '../../../../../projects/design-lib/src/lib/table/custom-element/custom-element.component';
 
 @Component({
   selector: 'app-demo-table',
@@ -66,15 +66,15 @@ export class DemoTableComponent implements OnInit {
       isHidden: true,
       width: '100px'
     },
-    /*{
-      columnDef: 'custom',
+    {
+      columnDef: 'rating',
       isSortable: false,
-      header: 'Custom',
+      header: 'Custom El',
       cellType: CellType.custom,
       options: {
-        CustomComponent: 'CustomTableCellComponent'
+        CustomComponent: CustomElementComponent
       }
-    },*/
+    },
   ];
 
   constructor() { }

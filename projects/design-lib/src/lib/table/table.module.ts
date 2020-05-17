@@ -24,6 +24,7 @@ import { CellType } from '../../Interfaces/table-interface';
 import { PaginationModule } from '../pagination/pagination.module';
 import { TableWrapperComponent } from './table-wrapper/table-wrapper.component';
 import { ColumnFilterComponent } from './column-filter/column-filter.component';
+import { CustomElementComponent } from './custom-element/custom-element.component';
 //import { TestComponent } from './test/test.component'
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ColumnFilterComponent } from './column-filter/column-filter.component';
     DateCellComponent,
     CurrencyCellComponent,
     TableWrapperComponent,
-    ColumnFilterComponent
+    ColumnFilterComponent,
+    CustomElementComponent
   ],
   imports: [
     CommonModule,
@@ -58,6 +60,7 @@ import { ColumnFilterComponent } from './column-filter/column-filter.component';
     //TestComponent
     //OmniTableComponent
     TableWrapperComponent,
+    CustomElementComponent
   ],
   providers: [
     CellService
@@ -65,7 +68,8 @@ import { ColumnFilterComponent } from './column-filter/column-filter.component';
   entryComponents: [
     TextCellComponent,
     DateCellComponent,
-    CurrencyCellComponent
+    CurrencyCellComponent,
+    CustomElementComponent
   ]
 })
 export class TableModule {
