@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { CellComponent } from './cell.component';
-import { FFColumnDef } from '../../../../../Interfaces/table-interface';
+import { FFColumnDef } from '../../../../Interfaces/table-interface';
 
 @Component({
-    selector: 'mdt-text-cell',
+    selector: 'lib-text-cell',
     template: '{{ row[column.columnDef] }}'
 })
 export class TextCellComponent implements CellComponent {

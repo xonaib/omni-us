@@ -11,13 +11,12 @@ import { MatSortModule } from '@angular/material/sort';
 
 
 import { TableComponent } from './table/table.component';
-import { TableCellComponent } from './table/table-cell/cell.component';
-import { CellDirective } from './table/table-cell/cell.directive';
-//import { CellComponent } from './table/table-cell/cell-types/cell.component';
-import { CellService } from './table/table-cell/cell-types/cell.service';
-import { TextCellComponent } from './table/table-cell/cell-types/text-cell.component';
-import { CurrencyCellComponent } from './table/table-cell/cell-types/currency-cell.component';
-import { DateCellComponent } from './table/table-cell/cell-types/date-cell.component';
+import { TableCellComponent } from './table-cell/cell.component';
+import { CellDirective } from './table-cell/cell.directive';
+import { CellService } from './table-cell/cell-types/cell.service';
+import { TextCellComponent } from './table-cell/cell-types/text-cell.component';
+import { CurrencyCellComponent } from './table-cell/cell-types/currency-cell.component';
+import { DateCellComponent } from './table-cell/cell-types/date-cell.component';
 
 import { CellType } from '../../Interfaces/table-interface';
 // import { OmniTableComponent } from './omni-table/omni-table.component';
@@ -32,13 +31,9 @@ import { ColumnFilterComponent } from './column-filter/column-filter.component';
     TableComponent,
     TableCellComponent,
     CellDirective,
-    //CellComponent,
-    //CellService,
     TextCellComponent,
     DateCellComponent,
     CurrencyCellComponent,
-    //TestComponent,
-    //OmniTableComponent,
     TableWrapperComponent,
     ColumnFilterComponent
   ],

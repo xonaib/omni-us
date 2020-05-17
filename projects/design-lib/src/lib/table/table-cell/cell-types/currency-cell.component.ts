@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { CellComponent } from './cell.component';
-import { FFColumnDef } from '../../../../../Interfaces/table-interface';
+import { FFColumnDef } from '../../../../Interfaces/table-interface';
 
 @Component({
-    selector: 'mdt-currency-cell',
+    selector: 'lib-currency-cell',
     template: '{{ row[column.columnDef] | currency }}'
 })
 export class CurrencyCellComponent implements CellComponent {

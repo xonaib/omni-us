@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-    selector: '[mdtCellHost]',
+    selector: '[libCellHost]',
 })
 export class CellDirective {
     constructor(public viewContainerRef: ViewContainerRef) {}

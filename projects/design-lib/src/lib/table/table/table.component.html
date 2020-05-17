@@ -1,4 +1,4 @@
-<div>
+<div [ngStyle]="{'width': tableConfig?.tableWidth}">
     <mat-form-field *ngIf="tableConfig?.isSearchable" style="display: inline-block; width:75%;">
         <mat-label>Search</mat-label>
         <input matInput [formControl]="searchInput">
@@ -18,11 +18,12 @@
     <span class="text" matSuffix>/{{totalPages}}</span>
   </mat-form-field>-->
 
-<table class="simple-table" mat-table [dataSource]="data" matSort (matSortChange)="sortChange($event)">
+<table class="simple-table" mat-table [dataSource]="data" matSort (matSortChange)="sortChange($event)"
+    [ngStyle]="{'width': tableConfig?.tableWidth}">
 
     <!-- Checkbox Column, selection column -->
     <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef style="width: 100px;">
+        <th mat-header-cell *matHeaderCellDef style="width: 30px;">
             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
             </mat-checkbox>
@@ -38,7 +39,7 @@
     mat-sort-header="{{ column.columnDef }}" [disabled]="column.isSortable === false"
  -->
     <ng-container #someDiv *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-        <th *matHeaderCellDef>
+        <th *matHeaderCellDef [ngStyle]="{'width': (column.width ? (column.width) :'100px')}">
 
             <span mat-sort-header [disabled]="column.isSortable !== true">{{ column.header }}</span>
 
@@ -52,7 +53,12 @@
 
         </th>
         <td *matCellDef="let row">
-            <mdt-table-cell i18n [row]="row" [column]="column"></mdt-table-cell>
+
+            <ng-container *ngIf="column.isEditable">
+                <input class="table-input" type=text [(ngModel)]="row[column.columnDef]"
+                    (blur)="onTextFieldBlur(row)" />
+            </ng-container>
+            <lib-table-cell i18n [row]="row" [column]="column" *ngIf="!column.isEditable"></lib-table-cell>
         </td>
     </ng-container>
 
@@ -63,6 +69,10 @@
 </table>
 
 <ng-container *ngIf="tableConfig?.isPaginated">
-    <lib-pagination [pageSize]="tableConfig?.paginationOptions?.defaultPageSize" [length]="length"
-        (page)="pageEvent($event)" [pageSizeOptions]="tableConfig?.paginationOptions?.pageSizeOptions"></lib-pagination>
+    <div [ngStyle]="{'width': tableConfig?.tableWidth}">
+        <lib-pagination [pageSize]="tableConfig?.paginationOptions?.defaultPageSize" [length]="length"
+            (page)="pageEvent($event)" [pageSizeOptions]="tableConfig?.paginationOptions?.pageSizeOptions">
+        </lib-pagination>
+    </div>
+
 </ng-container>

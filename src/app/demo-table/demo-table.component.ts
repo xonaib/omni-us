@@ -33,6 +33,7 @@ export class DemoTableComponent implements OnInit {
     isSearchable: true,
     isPaginated: true,
     showColumnsToggle: true,
+    tableWidth: '80%',
     paginationOptions: {
       defaultPageSize: 25,
       pageSizeOptions: [5, 10, 25, 50, 100]
@@ -43,12 +44,15 @@ export class DemoTableComponent implements OnInit {
     {
       columnDef: 'select',
       header: 'Select',
+      width: '20px'
     },
     {
       columnDef: 'title',
       header: 'Title',
       isSortable: true,
       hasColumnFilters: true,
+      isEditable: true,
+      width: '150px'
     },
 
     {
@@ -56,22 +60,26 @@ export class DemoTableComponent implements OnInit {
       isSortable: true,
       header: 'Author',
       hasColumnFilters: true,
+      width: '100px'
     },
     {
       columnDef: 'price',
       isSortable: false,
       header: 'Price',
       cellType: CellType.currency,
+      isEditable: true,
       options: {
         unit: '$'
-      }
+      },
+      width: '100px'
     },
     {
       columnDef: 'releaseDate',
       isSortable: false,
       header: 'Date',
       cellType: CellType.date,
-      isHidden: true
+      isHidden: true,
+      width: '100px'
     },
     /*{
       columnDef: 'custom',

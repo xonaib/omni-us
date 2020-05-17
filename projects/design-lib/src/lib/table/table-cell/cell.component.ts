@@ -2,11 +2,11 @@ import { Component, ComponentFactoryResolver, Input, ViewChild, OnInit } from '@
 import { CellDirective } from './cell.directive';
 import { CellService } from './cell-types/cell.service';
 import { CellComponent } from './cell-types/cell.component';
-import { FFColumnDef } from '../../../../Interfaces/table-interface';
+import { FFColumnDef } from '../../../Interfaces/table-interface';
 
 @Component({
-    selector: 'mdt-table-cell',
-    template: '<ng-template mdtCellHost></ng-template>'
+    selector: 'lib-table-cell',
+    template: '<ng-template libCellHost></ng-template>'
 })
 export class TableCellComponent implements OnInit {
 

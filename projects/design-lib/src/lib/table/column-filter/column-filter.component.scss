@@ -1,3 +1,5 @@
+@import "../../variables.scss";
+
 .form-group {
     :hover {
         background: rgba(0, 0, 0, 0.04);
@@ -18,5 +20,28 @@
 .mat-menu-item.cdk-keyboard-focused:not([disabled]),
 .mat-menu-item.cdk-program-focused:not([disabled]),
 .mat-menu-item:hover:not([disabled]) {
-  background: #fff;
+    background: #fff;
+}
+
+.mat-flat-button {
+    line-height:1.5;
+    margin-right: 8px;
+    padding: 11px 24px;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+    &.mat-green {
+        margin-right: 2px;
+        background-color: $color-green;
+        &:hover {
+            background-color: darken($color-green, 10);
+        }
+        ::ng-deep .mat-button-wrapper {
+            color: $color-white;
+        }
+    }
+    &.mat-text-gray {
+        ::ng-deep .mat-button-wrapper {
+          color: $color-tbody-border;
+        }
+      }
 }

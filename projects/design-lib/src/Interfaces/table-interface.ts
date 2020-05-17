@@ -18,6 +18,7 @@ export interface TableConfig {
     isPaginated?: boolean;
     showColumnsToggle?: boolean;
     paginationOptions?: PaginationOptions;
+    tableWidth?: string;
 }
 
 export interface PaginationOptions {

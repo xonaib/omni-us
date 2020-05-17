@@ -16,8 +16,7 @@ export class TableWrapperComponent<T> implements OnInit, OnDestroy {
   // @Input() dataSource: T[] | Observable<T[]>;
   @Input() data: T[];
   @Input() tableColumns: FFColumnDef[];
-  // tslint:disable-next-line: no-inferrable-types
-  @Input() hasPagination: boolean = true;
+ 
   @Input() length: number;
 
   @Input() tableConfig: TableConfig;

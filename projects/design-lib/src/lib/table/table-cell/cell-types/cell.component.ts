@@ -1,4 +1,4 @@
-import { FFColumnDef } from '../../../../../Interfaces/table-interface';
+import { FFColumnDef } from '../../../../Interfaces/table-interface';
 
 export interface CellComponent {
     column: FFColumnDef;

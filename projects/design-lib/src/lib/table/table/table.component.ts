@@ -186,6 +186,10 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     const filterValue = (event.target as HTMLInputElement).value;
   }
 
+  onTextFieldBlur(row: T): void {
+    debugger;
+  }
+
   updateFilters(filter: TableFilter): boolean {
     let isFilterApplied = false;
 

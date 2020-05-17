@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
 import { TextCellComponent } from './text-cell.component';
-import { CellType } from '../../../../../Interfaces/table-interface';
+import { CellType } from '../../../../Interfaces/table-interface';
 
 export class CellService {
 
