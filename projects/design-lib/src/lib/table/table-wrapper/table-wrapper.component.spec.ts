@@ -7,6 +7,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CellType, TableConfig, ColumnDef } from 'projects/design-lib/src/Interfaces/table-interface';
 import { OnInit, Component } from '@angular/core';
 import { DesignLibService } from 'projects/design-lib/src/public-api';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('TableComponent', () => {
   let service: DesignLibService;
@@ -16,13 +18,16 @@ describe('TableComponent', () => {
       imports: [
         PaginationModule,
         TableModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        HttpClientModule,
+        // HttpClientTestingModule
       ],
       declarations: [
         MatTableWithPaginatorApp,
       ],
       providers: [
-        { provide: DesignLibService, useValue: new DesignLibService(null) }
+        { provide: DesignLibService, useValue: new DesignLibService(null) },
+        //{ provide: HttpClient, useValue: HttpClient }
       ]
     }).compileComponents();
   }));
@@ -33,40 +38,7 @@ describe('TableComponent', () => {
 
       expect(fixture).toBeTruthy();
     });
-
-    it('should be able to create a table with the right number of columns', () => {
-      let fixture = TestBed.createComponent(MatTableWithPaginatorApp);
-      fixture.detectChanges();
-
-      //const renderedColumns = fixture.nativeElement.querySelector('.mat-table thead tr').childElementCount;
-      //expect(renderedColumns).toBeGreaterThan(0);
-
-      // fixture.componentInstance.table.data = fixture.componentInstance.allDataSet;
-      /*debugger;
-      // expect(columns.length).toBe(renderedColumns);
-      timer(2200)
-      .subscribe(s => {
-        fixture.detectChanges();
-        
-        const columns = fixture.componentInstance.columns;
-        const renderedColumns = fixture.nativeElement.querySelector('.mat-table thead tr').childElementCount;
-
-        debugger;
-      }); */
-
-    });
   });
-
-  /*describe('with paginated data app', () => {
-    let fixture = TestBed.createComponent(MatTableWithPaginatorApp);
-
-    it('should create', () => {
-      expect(fixture).toBeTruthy();
-    });
-
-    fixture.detectChanges();
-  }); */
-
 });
 export class Book {
   id: number;
@@ -77,18 +49,18 @@ export class Book {
   rating: number;
 
   constructor() {
-      this.id = 0;
-      this.author = '';
-      this.title = '';
-      this.releaseDate = null;
-      this.price = 0;
-      this.rating = 0;
+    this.id = 0;
+    this.author = '';
+    this.title = '';
+    this.releaseDate = null;
+    this.price = 0;
+    this.rating = 0;
   }
 }
 
 @Component({
   template: `
-     
+      <lib-table-wrapper  [tableColumns]="columns" [tableConfig]="tableConfig"></lib-table-wrapper>
 
 `
 })
