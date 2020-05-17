@@ -18,23 +18,26 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSortModule } from '@angular/material/sort';
-import { DemoTableComponent } from './demo-table/demo-table.component';
-import { CustomTableCellComponent } from './custom-table-cell/custom-table-cell.component';
+import { MatTabsModule } from '@angular/material/tabs';
+// import { DemoTableComponent } from './demo-table/demo-table.component';
+// import { CustomTableCellComponent } from './custom-table-cell/custom-table-cell.component';
 
 import { HttpRequestInterceptor } from './Interceptors/mock-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpClientModule  } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
-import { registerLocaleData } from '@angular/common'; 
-import localeFr from '@angular/common/locales/fr';
+import { DemosModule } from './modules/demos/demos.module';
 
-registerLocaleData(localeFr , 'fr');
+// import { registerLocaleData } from '@angular/common'; 
+// import localeFr from '@angular/common/locales/fr';
+
+// registerLocaleData(localeFr , 'fr');
 
 @NgModule({
   declarations: [
     AppComponent,
-    DemoTableComponent,
-    CustomTableCellComponent
+    // DemoTableComponent,
+    // CustomTableCellComponent
   ],
   imports: [
     BrowserModule,
@@ -47,19 +50,20 @@ registerLocaleData(localeFr , 'fr');
     MatIconModule,
     MatFormFieldModule,
     TableModule,
-    HttpClientModule
+    HttpClientModule,
+    DemosModule,
+    MatTabsModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequestInterceptor,
-      //useClass: isMock ? HttpMockRequestInterceptor : HttpRequestInterceptor,
       multi: true
-    } 
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    CustomTableCellComponent
+    //CustomTableCellComponent
   ]
 })
 export class AppModule { }

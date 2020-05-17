@@ -1,26 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FFColumnDef, CurrencyOptions, CellType, TableConfig } from '../../../projects/design-lib/src/Interfaces/table-interface';
-// import { PageEvent } from '../../../projects/design-lib/src/Interfaces/paginator-interface';
 import {
-  Observable,
-  Subject,
-  of as observableOf,
-  timer
-} from 'rxjs';
-//import 'rxjs/add/observable/timer';
+  FFColumnDef,
+  CurrencyOptions,
+  CellType,
+  TableConfig
+} from '../../../../../projects/design-lib/src/Interfaces/table-interface';
 
-/*
-interface Book {
-  id: number;
-  title: string;
-  author: string;
-  age: number;
-  currency: number;
-  date: Date;
-  dateTime: Date;
-  time: Date;
-} */
 
 @Component({
   selector: 'app-demo-table',
@@ -91,14 +77,8 @@ export class DemoTableComponent implements OnInit {
     },*/
   ];
 
-  //dataSourceAll: Book[] = [];
-
-
   constructor() { }
 
   ngOnInit() {
-
   }
-
-
 }
