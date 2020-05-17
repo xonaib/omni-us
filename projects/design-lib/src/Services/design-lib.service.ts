@@ -60,4 +60,17 @@ export class DesignLibService {
 
     return this.http.post<any>(`${this.updateRowUrl}`, row, options);
   }
+
+  getObjectProperties(item: any, removeIdCol: boolean = true): string[] {
+    let keysIterator = Object.keys(item);
+
+    if (removeIdCol) {
+      keysIterator = keysIterator.filter(m => m !== 'id');
+    }
+
+    const keys: Array<string> = keysIterator.map(key => {
+      return key;
+    });
+    return keys;
+  }
 }

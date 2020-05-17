@@ -41,7 +41,7 @@
     <ng-container #someDiv *ngFor="let column of columns" [matColumnDef]="column.columnDef">
         <th *matHeaderCellDef [ngStyle]="{'width': (column.width ? (column.width) :'100px')}">
 
-            <span mat-sort-header [disabled]="column.isSortable !== true">{{ column.header }}</span>
+            <span mat-sort-header [disabled]="column.isSortable !== true">{{ column.header | titlecase}}</span>
 
             <ng-container *ngIf="column.hasColumnFilters">
                 <lib-column-filter [field]="column.columnDef" (filterApply)="columnFilterApply($event)">

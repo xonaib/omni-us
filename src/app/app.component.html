@@ -4,11 +4,15 @@
 <!--<router-outlet></router-outlet>-->
 
 <mat-tab-group animationDuration="0ms">
-    <mat-tab label="Simple Table">
-        <app-demo-table></app-demo-table>
+    <mat-tab label="Simple Table with data source">
+        <app-simple-table></app-simple-table>
+       
     </mat-tab>
     <mat-tab label="Table with custom component">
-        <app-demo-table></app-demo-table>
+        <ng-template>
+            <app-demo-table></app-demo-table>
+        </ng-template>
+        
     </mat-tab>
     <mat-tab label="Third">Content 3</mat-tab>
   </mat-tab-group>

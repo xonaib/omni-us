@@ -132,6 +132,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
 
   searchInput: FormControl;
   searchCtrlSub: Subscription;
+  headersDisplayControl: FormControl;
 
   listenSearchInput(): void {
     this.searchInput = new FormControl('');
@@ -251,11 +252,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
 
-
-
-  headersDisplayControl = new FormControl();
-
-  constructor() { }
+  constructor(private service: DesignLibService) { }
 
   private _switchDataSource(value: T[] | Observable<T[]>) {
     this._data = [];
@@ -308,7 +305,7 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
   }
 
   ngAfterContentInit() {
-    
+
   }
 
   /** Set up a subscription for the data provided by the data source. */
@@ -334,7 +331,6 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     }
 
     this._renderChangeSubscription = dataStream.pipe(takeUntil(this._onDestroy)).subscribe((data: T[]) => {
-
       this._data = data || [];
     });
   }
@@ -346,6 +342,16 @@ export class TableComponent<T> implements OnInit, OnDestroy, AfterContentInit {
     this._headers = [];
     this.headersDisplayControl = new FormControl();
     this.displayedColumns = [];
+
+    // if no column definitions provided
+    // check if data is provided, and infer type from data
+    if ((this._colsDef == null || this._colsDef.length === 0) && this.tableConfig.tableRowType) {
+      this._headers = this.service.getObjectProperties(this.tableConfig.tableRowType);
+
+      this._colsDef = this._headers.map((value: string) => {
+        return { columnDef: value, header: value };
+      });
+    }
 
     this.headersDisplayControl.valueChanges.pipe(
       takeUntil(this._onDestroy), skip(1))

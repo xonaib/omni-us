@@ -36,8 +36,6 @@ import { DemosModule } from './modules/demos/demos.module';
 @NgModule({
   declarations: [
     AppComponent,
-    // DemoTableComponent,
-    // CustomTableCellComponent
   ],
   imports: [
     BrowserModule,

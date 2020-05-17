@@ -1,3 +1,4 @@
+import { Type } from '@angular/core';
 
 export interface ColumnDef {
     header?: string;
@@ -19,6 +20,7 @@ export interface TableConfig {
     showColumnsToggle?: boolean;
     paginationOptions?: PaginationOptions;
     tableWidth?: string;
+    tableRowType?: any;
 }
 
 export interface PaginationOptions {
