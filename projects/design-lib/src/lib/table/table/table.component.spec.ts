@@ -2,11 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TableComponent } from './table.component';
 import { PaginationModule } from '../../pagination/pagination.module';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { CellType, FFColumnDef } from 'projects/design-lib/src/Interfaces/table-interface';
+import { Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
+import { CellType, ColumnDef, TableConfig } from 'projects/design-lib/src/Interfaces/table-interface';
 import { TableModule } from '../table.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable, Subject, timer } from 'rxjs';
+import { DesignLibService } from 'projects/design-lib/src/Services/design-lib.service';
+import { Book } from 'src/app/Interfaces/Book-interface';
 /*
 describe('TableComponent', () => {
   let component: TableComponent;
@@ -33,6 +35,8 @@ describe('TableComponent', () => {
 
 
 describe('TableComponent', () => {
+  let service: DesignLibService;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -44,6 +48,13 @@ describe('TableComponent', () => {
         MatTableApp,
         MatTableWithPaginatorApp,
       ],
+      providers: [
+        { provide: DesignLibService, useValue: new DesignLibService(null) }
+      ]
+      /* providers: [
+        TableComponent,
+        { provide: DesignLibService, useClass: DesignLibService }
+      ] */
     }).compileComponents();
   }));
 
@@ -58,12 +69,22 @@ describe('TableComponent', () => {
       let fixture = TestBed.createComponent(MatTableApp);
       fixture.detectChanges();
 
-      // const tableElement = fixture.nativeElement.querySelector('.mat-table')!;
-      const columns = fixture.componentInstance.columns;
       const renderedColumns = fixture.nativeElement.querySelector('.mat-table thead tr').childElementCount;
+      expect(renderedColumns).toBeGreaterThan(0);
 
-      fixture.componentInstance.table.data = fixture.componentInstance.allDataSet;
-      expect(columns.length).toBe(renderedColumns);
+      // fixture.componentInstance.table.data = fixture.componentInstance.allDataSet;
+      /*debugger;
+      // expect(columns.length).toBe(renderedColumns);
+      timer(2200)
+      .subscribe(s => {
+        fixture.detectChanges();
+        
+        const columns = fixture.componentInstance.columns;
+        const renderedColumns = fixture.nativeElement.querySelector('.mat-table thead tr').childElementCount;
+
+        debugger;
+      }); */
+
     });
   });
 });
@@ -90,7 +111,7 @@ class MatTableWithPaginatorApp implements OnInit {
   }
 }
 @Component({
-  template: `<lib-table  [tableColumns]="columns"></lib-table>`
+  template: `<lib-table  [data]="allDataSet" [tableConfig]="tableConfig"></lib-table>`
 })
 class MatTableApp implements OnInit, OnDestroy {
 
@@ -98,10 +119,13 @@ class MatTableApp implements OnInit, OnDestroy {
 
   private _loading = new Subject<Book[]>();
 
+  tableConfig: TableConfig = {
+    tableRowType: new Book()
+  };
   dataSource: Observable<Book[]>;
-  allDataSet: Book[];
+  allDataSet: Book[] = [];
 
-  columns: FFColumnDef[] = [
+  columns: ColumnDef[] = [
     {
       columnDef: 'title',
       header: 'Title',
@@ -131,14 +155,16 @@ class MatTableApp implements OnInit, OnDestroy {
   ngOnInit() {
     this.dataSource = this._loading.asObservable();
 
-    this.allDataSet = new Array(5);
-    this.allDataSet = this.allDataSet.map((v, i) => this.createNewBook(i) );
+    //this.allDataSet = new Array(5);
+    //this.allDataSet = this.allDataSet.map((v, i) => this.createNewBook(i));
 
-    timer(1200)
+    //this._loading.next(this.allDataSet);
+
+    /*timer(100)
       .subscribe(s => {
         debugger;
         this._loading.next(this.allDataSet);
-      });
+      }); */
   }
 
   createNewBook(index: number): Book {
@@ -152,7 +178,7 @@ class MatTableApp implements OnInit, OnDestroy {
     };
 
     return book;
-  } 
+  }
   ngOnDestroy() {
     this._loading.next();
     this._loading.complete();
