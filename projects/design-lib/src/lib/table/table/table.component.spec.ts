@@ -8,31 +8,6 @@ import { TableModule } from '../table.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable, Subject, timer } from 'rxjs';
 import { DesignLibService } from 'projects/design-lib/src/Services/design-lib.service';
-import { Book } from 'src/app/Interfaces/Book-interface';
-/*
-describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ TableComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TableComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
-*/
-
 
 describe('TableComponent', () => {
   let service: DesignLibService;
@@ -46,15 +21,11 @@ describe('TableComponent', () => {
       ],
       declarations: [
         MatTableApp,
-        MatTableWithPaginatorApp,
+        // MatTableWithPaginatorApp,
       ],
       providers: [
         { provide: DesignLibService, useValue: new DesignLibService(null) }
       ]
-      /* providers: [
-        TableComponent,
-        { provide: DesignLibService, useClass: DesignLibService }
-      ] */
     }).compileComponents();
   }));
 
@@ -69,6 +40,7 @@ describe('TableComponent', () => {
       let fixture = TestBed.createComponent(MatTableApp);
       fixture.detectChanges();
 
+      debugger;
       const renderedColumns = fixture.nativeElement.querySelector('.mat-table thead tr').childElementCount;
       expect(renderedColumns).toBeGreaterThan(0);
 
@@ -87,29 +59,36 @@ describe('TableComponent', () => {
 
     });
   });
-});
 
-export interface Book {
+  /*describe('with paginated data app', () => {
+    let fixture = TestBed.createComponent(MatTableWithPaginatorApp);
+
+    it('should create', () => {
+      expect(fixture).toBeTruthy();
+    });
+
+    fixture.detectChanges();
+  }); */
+
+});
+class Book {
   id: number;
   author: string;
   title: string;
   releaseDate: Date;
   price: number;
   rating: number;
-}
 
-@Component({
-  template: `
-      <lib-table  [tableColumns]="columns" [hasPagination]="true"></lib-table>
-
-`
-})
-class MatTableWithPaginatorApp implements OnInit {
-
-  ngOnInit() {
-
+  constructor() {
+      this.id = 0;
+      this.author = '';
+      this.title = '';
+      this.releaseDate = null;
+      this.price = 0;
+      this.rating = 0;
   }
 }
+
 @Component({
   template: `<lib-table  [data]="allDataSet" [tableConfig]="tableConfig"></lib-table>`
 })

@@ -27,6 +27,7 @@ export class TableCellComponent implements OnInit {
     initCell() {
         let cellComponent = null;
 
+        // if cell type is provided, use that custom component
         if (this.column.cellType === CellType.custom && this.column.options) {
             cellComponent = this.column.options.CustomComponent;
         } else {
