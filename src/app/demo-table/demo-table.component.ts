@@ -64,10 +64,9 @@ export class DemoTableComponent implements OnInit {
     },
     {
       columnDef: 'price',
-      isSortable: false,
+      isSortable: true,
       header: 'Price',
       cellType: CellType.currency,
-      isEditable: true,
       options: {
         unit: '$'
       },

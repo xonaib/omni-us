@@ -23,23 +23,28 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
         const params: TableDataParams = request.body as TableDataParams;
         return this.getTableData(params);
-
-        // return of(new HttpResponse({ status: 200, body: filteredResults }));
-        // return of(new HttpResponse({ status: 200, body: (([1, 2, 3]) as any).default }));
-
-        // return next.handle(request);
     }
 
     updateTableRow(row: Book): Observable<HttpEvent<any>> {
         let response = false;
         let book = books.find(f => f.id === row.id);
-        debugger;
+
         if (book != null) {
             book = row;
             response = true;
         }
 
         return timer(500).pipe(switchMap(() => of(new HttpResponse({ status: 200, body: response }))));
+    }
+
+    /** Returns searchable keys */
+    getSearchableKeys(): string[] {
+
+        const book = new Book();
+        const keys: Array<string> = Object.keys(book).filter(m => m !== 'id').map(key => {
+            return key;
+        });
+        return keys;
     }
 
     /** Send Mock Table data */
@@ -52,12 +57,10 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             // return of(new HttpResponse({ status: 200, body: book }));
         }
 
-        debugger;
         let filteredResults: Book[] = [];
         filteredResults = this.filterItems(books, params.filter);
 
-        // to-do: map keys from interface
-        const searchKeys = ['author', 'title', 'price', 'rating'];
+        const searchKeys = this.getSearchableKeys();
         filteredResults = this.searchInItems(filteredResults, params.search, searchKeys);
 
         const itemsCount = filteredResults.length;

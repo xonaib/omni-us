@@ -13,8 +13,8 @@ function generateRandomBooks(count: number) {
 
         books.push({
             id: (i + 1),
-            title: authors[randomIndex],
-            author: titles[randomIndex],
+            title: titles[randomIndex],
+            author: authors[randomIndex],
             releaseDate: randomDateGenerator(),
             price: randomPriceGenerator(),
             rating: randomRatingGenerator(),
