@@ -21,7 +21,7 @@ describe('TableComponent', () => {
       ],
       declarations: [
         MatTableApp,
-        // MatTableWithPaginatorApp,
+        MatTableAppComplete
       ],
       providers: [
         { provide: DesignLibService, useValue: new DesignLibService(null) }
@@ -60,15 +60,24 @@ describe('TableComponent', () => {
     });
   });
 
-  /*describe('with paginated data app', () => {
-    let fixture = TestBed.createComponent(MatTableWithPaginatorApp);
+  describe('with paginated data app', () => {
 
+    //fixture.detectChanges();
     it('should create', () => {
+      let fixture = TestBed.createComponent(MatTableAppComplete);
+
       expect(fixture).toBeTruthy();
     });
 
-    fixture.detectChanges();
-  }); */
+    it('should add filters in header', () => {
+      let fixture = TestBed.createComponent(MatTableAppComplete);
+      fixture.detectChanges();
+
+debugger;
+      expect(fixture).toBeTruthy();
+    });
+
+  });
 
 });
 class Book {
@@ -80,12 +89,12 @@ class Book {
   rating: number;
 
   constructor() {
-      this.id = 0;
-      this.author = '';
-      this.title = '';
-      this.releaseDate = null;
-      this.price = 0;
-      this.rating = 0;
+    this.id = 0;
+    this.author = '';
+    this.title = '';
+    this.releaseDate = null;
+    this.price = 0;
+    this.rating = 0;
   }
 }
 
@@ -104,10 +113,66 @@ class MatTableApp implements OnInit, OnDestroy {
   dataSource: Observable<Book[]>;
   allDataSet: Book[] = [];
 
+
+
+  ngOnInit() {
+    this.dataSource = this._loading.asObservable();
+
+    //this.allDataSet = new Array(5);
+    //this.allDataSet = this.allDataSet.map((v, i) => this.createNewBook(i));
+
+    //this._loading.next(this.allDataSet);
+
+    /*timer(100)
+      .subscribe(s => {
+        debugger;
+        this._loading.next(this.allDataSet);
+      }); */
+  }
+
+  createNewBook(index: number): Book {
+    const book: Book = {
+      author: `author ${index}`,
+      title: `title ${index}`,
+      id: index,
+      price: Math.round(1000 + Math.random() * 2000),
+      releaseDate: new Date(),
+      rating: Math.round(1 + Math.random() * 5)
+    };
+
+    return book;
+  }
+  ngOnDestroy() {
+    this._loading.next();
+    this._loading.complete();
+  }
+}
+
+
+
+@Component({
+  template: `<lib-table  [data]="allDataSet" [tableColumns]="tableColumns" [tableConfig]="tableConfig"></lib-table>`
+})
+class MatTableAppComplete implements OnInit, OnDestroy {
+
+  @ViewChild(TableComponent, { static: true }) table: TableComponent<Book>;
+
+  private _loading = new Subject<Book[]>();
+
+  tableConfig: TableConfig = {
+    tableRowType: new Book(),
+    showColumnsToggle: true,
+  };
+  dataSource: Observable<Book[]>;
+  allDataSet: Book[] = [];
+
   columns: ColumnDef[] = [
     {
       columnDef: 'title',
       header: 'Title',
+      isSortable: true,
+      isEditable: true,
+      hasColumnFilters: true
     },
     {
       columnDef: 'author',
@@ -163,4 +228,3 @@ class MatTableApp implements OnInit, OnDestroy {
     this._loading.complete();
   }
 }
-
